@@ -92,6 +92,10 @@ You **only need to describe your requirements to the AI in natural language** â€
 > It is highly recommended to have the Agent enter Plan mode before starting, especially with the [superpowers writing-plans](https://github.com/obra/superpowers/tree/main/skills/writing-plans) skill. It's best to plan your requirements page by page in advance: e.g., what images p1 needs, what bullets p2 should contain.
 
 **(1) PKU Academic Mode**
+
+https://github.com/user-attachments/assets/2824cfd7-fcb3-4581-ba68-2e40b0ce3830
+
+
 ```text
 /hep-frontend-slides
 
@@ -121,6 +125,10 @@ You **only need to describe your requirements to the AI in natural language** â€
 6. ðŸ’¡ **Presentation Shortcuts**: In PKU mode HTML, press **`F`** to enter/exit browser fullscreen; press **`G`** to open the go-to-slide dialog â€” type a page number and hit Enter to jump directly.
 
 **(2) Free Style Mode**
+
+https://github.com/user-attachments/assets/bcabacb0-73f5-4612-9b50-c3f7670c57ad
+
+
 ```text
 /hep-frontend-slides
 
