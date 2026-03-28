@@ -12,7 +12,11 @@ Requires: pip install python-pptx
 import json
 import os
 import sys
-from pptx import Presentation
+try:
+    from pptx import Presentation
+except ImportError:
+    print("❌ 未找到 python-pptx 库，请使用 pip install python-pptx 安装")
+    sys.exit(1)
 
 
 def extract_pptx(file_path, output_dir="."):

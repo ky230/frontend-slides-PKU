@@ -135,7 +135,7 @@ Ask how they want to choose (header: "Style"):
 - "Show me options" (recommended) — Generate 3 previews based on mood
 - "I know what I want" — Pick from preset list directly
 
-**If direct selection:** Show preset picker and skip to Phase 3. Available presets are defined in [STYLE_PRESETS.md](STYLE_PRESETS.md).
+**If direct selection:** Show preset picker and skip to Phase 3. Available presets are defined in [STYLE_PRESETS.md](reference/STYLE_PRESETS.md).
 
 ### Step 2.1: Mood Selection (Guided Discovery)
 
@@ -149,7 +149,7 @@ What feeling should the audience have? Options:
 
 ### Step 2.2: Generate 3 Style Previews
 
-Based on mood, generate 3 distinct single-slide HTML previews showing typography, colors, animation, and overall aesthetic. Read [STYLE_PRESETS.md](STYLE_PRESETS.md) for available presets and their specifications.
+Based on mood, generate 3 distinct single-slide HTML previews showing typography, colors, animation, and overall aesthetic. Read [STYLE_PRESETS.md](reference/STYLE_PRESETS.md) for available presets and their specifications.
 
 | Mood                | Suggested Presets                                  |
 | ------------------- | -------------------------------------------------- |
@@ -179,9 +179,9 @@ If images were provided, the slide outline already incorporates them from Step 1
 
 **Before generating, read these supporting files:**
 
-- [html-template.md](html-template.md) — HTML architecture and JS features
-- [viewport-base.css](viewport-base.css) — Mandatory CSS (include in full)
-- [animation-patterns.md](animation-patterns.md) — Animation reference for the chosen feeling
+- [html-template.md](reference/html-template.md) — HTML architecture and JS features
+- [viewport-base.css](reference/viewport-base.css) — Mandatory CSS (include in full)
+- [animation-patterns.md](reference/animation-patterns.md) — Animation reference for the chosen feeling
 
 **Key requirements:**
 
@@ -313,10 +313,10 @@ This captures each slide as a screenshot and combines them into a PDF. Perfect f
 
 | File                                               | Purpose                                                              | When to Read              |
 | -------------------------------------------------- | -------------------------------------------------------------------- | ------------------------- |
-| [STYLE_PRESETS.md](STYLE_PRESETS.md)               | 12 curated visual presets with colors, fonts, and signature elements | Phase 2 (style selection) |
-| [viewport-base.css](viewport-base.css)             | Mandatory responsive CSS — copy into every presentation              | Phase 3 (generation)      |
-| [html-template.md](html-template.md)               | HTML structure, JS features, code quality standards                  | Phase 3 (generation)      |
-| [animation-patterns.md](animation-patterns.md)     | CSS/JS animation snippets and effect-to-feeling guide                | Phase 3 (generation)      |
+| [STYLE_PRESETS.md](reference/STYLE_PRESETS.md)               | 12 curated visual presets with colors, fonts, and signature elements | Phase 2 (style selection) |
+| [viewport-base.css](reference/viewport-base.css)             | Mandatory responsive CSS — copy into every presentation              | Phase 3 (generation)      |
+| [html-template.md](reference/html-template.md)               | HTML structure, JS features, code quality standards                  | Phase 3 (generation)      |
+| [animation-patterns.md](reference/animation-patterns.md)     | CSS/JS animation snippets and effect-to-feeling guide                | Phase 3 (generation)      |
 | [scripts/extract-pptx.py](scripts/extract-pptx.py) | Python script for PPT content extraction                             | Phase 4 (conversion)      |
 | [scripts/deploy.sh](scripts/deploy.sh)             | Deploy slides to Vercel for instant sharing                          | Phase 6 (sharing)         |
 | [scripts/export-pdf.sh](scripts/export-pdf.sh)     | Export slides to PDF                                                 | Phase 6 (sharing)         |
