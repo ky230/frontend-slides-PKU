@@ -91,7 +91,7 @@ graph TD
 > [!TIP]
 > 强烈建议在动工前让 Agent 进入 Plan 模式，尤其推荐辅助配合 [superpowers writing-plans](https://github.com/obra/superpowers/tree/main/skills/writing-plans) 技能。最好预先逐页规划好需求：例如 p1 需要哪些图，p2 需要写定哪些 bullet。
 
-**(1) PKU 学术模式**
+### 🏛️ (1) PKU 学术模式
 
 https://github.com/user-attachments/assets/7acc9292-5fa3-424e-9d57-2e364f658788
 
@@ -124,7 +124,7 @@ https://github.com/user-attachments/assets/7acc9292-5fa3-424e-9d57-2e364f658788
 5. **只有当排版完全符合你的要求后**，再向 AI 发出 **"bundle/交付"** 指令。它会将所有本地插图内嵌为 Base64，交付一份完全自包含的单文件 HTML。
 6. 💡 **演示快捷键**：在 PKU mode 生成的 HTML 中，按 **`F`** 可直接进入/退出浏览器全屏模式；按 **`G`** 会弹出跳转框，输入页码后回车即可快速跳转到对应 Slide。
 
-**(2) Free 自由模式**
+### ⚡️ (2) Free 自由模式
 
 https://github.com/user-attachments/assets/dad50c60-f357-40e7-a72e-f055ea604550
 
@@ -142,7 +142,7 @@ https://github.com/user-attachments/assets/dad50c60-f357-40e7-a72e-f055ea604550
 5. ⭐️ **持续排版微调 (Fine-tuning)**：不断让 Agent 修改细节瑕疵直到完美。
 6. 完全满意后，再下达 **"bundle/交付"** 指令执行最终的封口打包。
 
-**(3) .pptx 转换为 Web 幻灯片**
+### 🔁 (3) .pptx 转换为 Web 幻灯片
 ```text
 /hep-frontend-slides
 

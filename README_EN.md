@@ -91,7 +91,7 @@ You **only need to describe your requirements to the AI in natural language** �
 > [!TIP]
 > It is highly recommended to have the Agent enter Plan mode before starting, especially with the [superpowers writing-plans](https://github.com/obra/superpowers/tree/main/skills/writing-plans) skill. It's best to plan your requirements page by page in advance: e.g., what images p1 needs, what bullets p2 should contain.
 
-**(1) PKU Academic Mode**
+### 🏛️ (1) PKU Academic Mode
 
 https://github.com/user-attachments/assets/2824cfd7-fcb3-4581-ba68-2e40b0ce3830
 
@@ -124,7 +124,7 @@ https://github.com/user-attachments/assets/2824cfd7-fcb3-4581-ba68-2e40b0ce3830
 5. **Only when the layout fully meets your requirements**, issue the **"bundle/deliver"** command to the AI. It will embed all local images as Base64, delivering a fully self-contained single-file HTML.
 6. 💡 **Presentation Shortcuts**: In PKU mode HTML, press **`F`** to enter/exit browser fullscreen; press **`G`** to open the go-to-slide dialog — type a page number and hit Enter to jump directly.
 
-**(2) Free Style Mode**
+### ⚡️ (2) Free Style Mode
 
 https://github.com/user-attachments/assets/bcabacb0-73f5-4612-9b50-c3f7670c57ad
 
@@ -142,7 +142,7 @@ https://github.com/user-attachments/assets/bcabacb0-73f5-4612-9b50-c3f7670c57ad
 5. ⭐️ **Continuous Layout Fine-tuning**: Keep having the Agent refine details until perfect.
 6. When fully satisfied, issue the **"bundle/deliver"** command to execute the final packaging.
 
-**(3) Convert .pptx to Web Slides**
+### 🔁 (3) Convert .pptx to Web Slides
 ```text
 /hep-frontend-slides
 
