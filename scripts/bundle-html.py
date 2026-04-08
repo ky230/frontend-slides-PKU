@@ -58,7 +58,18 @@ def bundle_html(input_html_path, output_html_path):
     print("="*50)
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        print("Usage: python bundle-html.py <input.html> <output.html>")
+    if len(sys.argv) not in [2, 3]:
+        print("Usage: python bundle-html.py <input.html> [output.html]")
         sys.exit(1)
-    bundle_html(sys.argv[1], sys.argv[2])
+        
+    input_file = sys.argv[1]
+    if len(sys.argv) == 3:
+        output_file = sys.argv[2]
+    else:
+        # Automatically generate _bundle suffixed output file if none provided
+        base, ext = os.path.splitext(input_file)
+        if ext.lower() == "":
+            ext = ".html"
+        output_file = f"{base}_bundle{ext}"
+        
+    bundle_html(input_file, output_file)

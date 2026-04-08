@@ -193,6 +193,7 @@ console.log(`  Local server on port ${port}`);
 const browser = await chromium.launch();
 const page = await browser.newPage({
   viewport: { width: VP_WIDTH, height: VP_HEIGHT },
+  deviceScaleFactor: 3,
 });
 
 // Load the presentation
@@ -219,9 +220,10 @@ if (slideCount === 0) {
   process.exit(1);
 }
 
-// Screenshot each slide
+// Screenshot each slide + extract link positions for ghost overlay
 mkdirSync(SCREENSHOT_DIR, { recursive: true });
 const screenshotPaths = [];
+const slideLinks = []; // Array of arrays: [[{href, x, y, w, h}, ...], ...]
 
 for (let i = 0; i < slideCount; i++) {
   // Navigate to slide by simulating the presentation's navigation
@@ -277,10 +279,38 @@ for (let i = 0; i < slideCount; i++) {
 
   await page.waitForTimeout(100);
 
+  // Extract all <a> tag bounding boxes and hrefs from the current slide
+  const links = await page.evaluate((index) => {
+    const slides = document.querySelectorAll('.slide');
+    const currentSlide = slides[index];
+    if (!currentSlide) return [];
+    const anchors = currentSlide.querySelectorAll('a[href]');
+    const result = [];
+    for (const a of anchors) {
+      const href = a.getAttribute('href');
+      // Only collect external links (http/https)
+      if (!href || !href.startsWith('http')) continue;
+      const rect = a.getBoundingClientRect();
+      if (rect.width === 0 || rect.height === 0) continue;
+      result.push({
+        href,
+        x: rect.x,
+        y: rect.y,
+        w: rect.width,
+        h: rect.height,
+      });
+    }
+    return result;
+  }, i);
+
+  slideLinks.push(links);
+
   const screenshotPath = join(SCREENSHOT_DIR, `slide-${String(i + 1).padStart(3, '0')}.png`);
   await page.screenshot({ path: screenshotPath, fullPage: false });
   screenshotPaths.push(screenshotPath);
-  console.log(`  Captured slide ${i + 1}/${slideCount}`);
+  
+  const linkInfo = links.length > 0 ? ` (${links.length} link${links.length > 1 ? 's' : ''})` : '';
+  console.log(`  Captured slide ${i + 1}/${slideCount}${linkInfo}`);
 }
 
 await browser.close();
@@ -294,11 +324,22 @@ console.log('  Assembling PDF...');
 const browser2 = await chromium.launch();
 const pdfPage = await browser2.newPage();
 
-// Build an HTML page with all screenshots, one per page
-const imagesHtml = screenshotPaths.map((p) => {
+// Build an HTML page with all screenshots + ghost link overlays, one per page
+let totalLinks = 0;
+const imagesHtml = screenshotPaths.map((p, idx) => {
   const imgData = readFileSync(p).toString('base64');
-  return `<div class="page"><img src="data:image/png;base64,${imgData}" /></div>`;
+  const links = slideLinks[idx] || [];
+  totalLinks += links.length;
+  // Generate transparent <a> overlays for each link on this slide
+  const linkOverlays = links.map(l =>
+    `<a href="${l.href}" target="_blank" style="position:absolute;left:${l.x}px;top:${l.y}px;width:${l.w}px;height:${l.h}px;display:block;z-index:10;"></a>`
+  ).join('\n');
+  return `<div class="page"><img src="data:image/png;base64,${imgData}" />${linkOverlays}</div>`;
 }).join('\n');
+
+if (totalLinks > 0) {
+  console.log(`  Embedding ${totalLinks} clickable link(s) into PDF...`);
+}
 
 const pdfHtml = `<!DOCTYPE html>
 <html>
@@ -311,6 +352,7 @@ const pdfHtml = `<!DOCTYPE html>
     height: ${VP_HEIGHT}px;
     page-break-after: always;
     overflow: hidden;
+    position: relative;
   }
   .page:last-child { page-break-after: auto; }
   img {
