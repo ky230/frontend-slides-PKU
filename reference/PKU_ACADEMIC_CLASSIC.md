@@ -310,7 +310,7 @@ html, body {
 }
 .image-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
 
-a { color: #0000ee; text-decoration: underline; }
+a { color: #0000ee; text-decoration: underline; text-decoration-skip-ink: none; }
 
 /* Equal Two-Column */
 .two-col {
