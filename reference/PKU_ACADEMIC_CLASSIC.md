@@ -276,7 +276,7 @@ html, body {
 }
 
 /* Bullet Hierarchy */
-.bullet-list { margin-left: 40px; }
+.bullet-list { margin-left: 0; }
 .bullet-list li {
     list-style-type: disc;
     font-size: var(--body-size); margin-bottom: 30px; line-height: 1.5;

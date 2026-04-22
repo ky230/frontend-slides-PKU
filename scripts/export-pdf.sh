@@ -38,17 +38,24 @@ err()   { echo -e "${RED}✗${NC} $*" >&2; }
 VIEWPORT_W=1920
 VIEWPORT_H=1080
 COMPACT=false
+DPR=3
 
 POSITIONAL=()
-for arg in "$@"; do
-    case $arg in
+while [[ $# -gt 0 ]]; do
+    case $1 in
         --compact)
             COMPACT=true
             VIEWPORT_W=1280
             VIEWPORT_H=720
+            shift
+            ;;
+        --dpr)
+            DPR="$2"
+            shift 2
             ;;
         *)
-            POSITIONAL+=("$arg")
+            POSITIONAL+=("$1")
+            shift
             ;;
     esac
 done
@@ -145,6 +152,7 @@ const OUTPUT_PDF = process.argv[4];
 const SCREENSHOT_DIR = process.argv[5];
 const VP_WIDTH = parseInt(process.argv[6]) || 1920;
 const VP_HEIGHT = parseInt(process.argv[7]) || 1080;
+const DPR = parseInt(process.argv[8]) || 3;
 
 // ─── Simple static file server ────────────────────────────
 // (We need HTTP so that Google Fonts and relative assets load correctly)
@@ -193,7 +201,7 @@ console.log(`  Local server on port ${port}`);
 const browser = await chromium.launch();
 const page = await browser.newPage({
   viewport: { width: VP_WIDTH, height: VP_HEIGHT },
-  deviceScaleFactor: 3,
+  deviceScaleFactor: DPR,
 });
 
 // Load the presentation
@@ -428,7 +436,7 @@ if [[ "$COMPACT" == "true" ]]; then
     info "Using compact mode (1280×720) for smaller file size"
 fi
 
-node "$TEMP_SCRIPT" "$SERVE_DIR" "$HTML_FILENAME" "$OUTPUT_PDF" "$SCREENSHOT_DIR" "$VIEWPORT_W" "$VIEWPORT_H" || {
+node "$TEMP_SCRIPT" "$SERVE_DIR" "$HTML_FILENAME" "$OUTPUT_PDF" "$SCREENSHOT_DIR" "$VIEWPORT_W" "$VIEWPORT_H" "$DPR" || {
     err "PDF export failed."
     rm -rf "$TEMP_DIR"
     exit 1
