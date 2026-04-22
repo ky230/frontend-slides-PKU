@@ -521,7 +521,7 @@ Insert after `</style>` and before `</head>`:
 ```html
 <section class="slide normal-slide" data-header="visible" data-title="Outline">
     <div class="slide-content">
-        <ul class="bullet-list reveal d1" style="margin-top: 6rem;">
+        <ul class="bullet-list reveal d1" style="margin-top: 6rem; margin-left: 0;">
             <li><strong>{{Outline_Item_1}}</strong></li>
             <li><strong>{{Outline_Item_2}}</strong></li>
             <!-- ... -->
@@ -549,7 +549,7 @@ The top red bar title `data-title` defaults to the nearest transition page title
 ```html
 <section class="slide normal-slide" data-header="visible" data-title="{{Nearest_Transition_Title}}">
     <div class="slide-content reveal d1">
-        <ul class="bullet-list">
+        <ul class="bullet-list" style="margin-left: 0;">
             <li>Level 1 content (red disc bullet)
                 <ul>
                     <li>Level 2 content (red dash —)</li>
@@ -596,8 +596,8 @@ The top red bar title `data-title` defaults to the nearest transition page title
 Used in TB slides to display multi-threshold / multi-VOV comparison plots (3 columns × 2 rows):
 
 ```html
-<ul class="bullet-list" style="margin-bottom: 2px;"><li><strong>Run Title</strong></li></ul>
-<ul class="bullet-list" style="margin-bottom: 5px; font-size: 0.8em;">
+<ul class="bullet-list" style="margin-bottom: 2px; margin-left: 0;"><li><strong>Run Title</strong></li></ul>
+<ul class="bullet-list" style="margin-bottom: 5px; font-size: 0.8em; margin-left: 0;">
     <li>Top row: <strong>>120 ADC cut</strong> | Bottom row: <strong>>0 ADC cut</strong></li>
 </ul>
 <div class="image-grid"
