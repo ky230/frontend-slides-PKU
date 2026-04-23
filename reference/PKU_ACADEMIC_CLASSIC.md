@@ -567,6 +567,18 @@ The top red bar title `data-title` defaults to the nearest transition page title
 > - Content area only allows: `bullet-list`, `table`, `image-grid`, `highlight-box` / `important-box`, etc.
 > - When sub-section headings are needed, use **bold L1 bullet** instead of heading tags
 
+> **💡 Per-slide bullet margin fine-tuning:**
+>
+> By default, `.slide-content` has `overflow: hidden`, so negative `margin-left` on `<ul>` will be clipped. To push bullets **beyond** the normal `.slide-content` boundary on a specific slide:
+>
+> 1. Add `overflow: visible` to that slide's `.slide-content`:
+>    `<div class="slide-content" style="overflow: visible;">`
+> 2. Use negative `margin-left` on the `<ul>`:
+>    `<ul class="bullet-list" style="margin-left: -40px;">`
+> 3. Adjust `-40px` to `-80px` (maximum, aligns with red title bar left edge).
+>
+> **⚠️ Do NOT use `list-style-position: inside`** — it changes the bullet-text spacing. Keep default `outside` and rely on `overflow: visible` instead.
+
 ### 5.6 Highlight Box Usage
 
 ```html
