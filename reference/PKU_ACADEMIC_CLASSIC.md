@@ -293,7 +293,8 @@ html, body {
 
 /* Text-Image Mixed Layout */
 .dual-layout {
-    display: grid; grid-template-columns: 4fr 6fr; gap: 40px; height: 100%;
+    --split: 4fr 6fr;
+    display: grid; grid-template-columns: var(--split); gap: 40px; height: 100%;
 }
 .left-col {
     display: flex; flex-direction: column;
@@ -400,8 +401,48 @@ tr:nth-child(even) { background: #f5f0e3; }
     border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 .figure-frame .caption {
-    font-size: calc(var(--body-size) * 0.6); color: #666; margin-top: 4px;
+    font-size: calc(var(--body-size) * 0.5); color: #666; margin-top: 4px;
 }
+
+/* ===========================================
+   FIGURE LAYOUT SYSTEM
+   5 knobs: --w(width) --h(height) --x(horizontal) --y(vertical) --gap(spacing)
+   =========================================== */
+.fig {
+    --w: 100%; --h: 100%; --x: 0px; --y: 0px; --gap: 15px;
+    display: grid; gap: var(--gap); width: 100%; flex: 1; min-height: 0;
+    align-items: center; justify-items: center;
+    transform: translate(var(--x), var(--y));
+}
+.fig img {
+    max-width: var(--w); max-height: var(--h); width: 100%; height: 100%;
+    object-fit: contain; border-radius: 4px;
+}
+.fig .figure-frame img { width: auto; height: auto; }
+.fig .caption {
+    font-size: calc(var(--body-size) * 0.5); color: #666;
+    text-align: center; margin-top: 2px;
+}
+/* 1-column presets */
+.fig-1   { grid-template-columns: 1fr; --h: 70vh; }
+.fig-2x1 { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; --h: 40vh; }
+.fig-3x1 { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr 1fr; --h: 28vh; }
+.fig-4x1 { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr 1fr 1fr; --h: 20vh; }
+/* 2-column presets */
+.fig-1x2 { grid-template-columns: 1fr 1fr; --h: 65vh; }
+.fig-2x2 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; --h: 38vh; }
+.fig-3x2 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; --h: 28vh; }
+.fig-4x2 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr 1fr 1fr; --h: 20vh; }
+/* 3-column presets */
+.fig-1x3 { grid-template-columns: 1fr 1fr 1fr; --h: 60vh; }
+.fig-2x3 { grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr; --h: 35vh; }
+.fig-3x3 { grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; --h: 25vh; }
+.fig-4x3 { grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr 1fr; --h: 18vh; }
+/* 4-column presets */
+.fig-1x4 { grid-template-columns: 1fr 1fr 1fr 1fr; --h: 55vh; }
+.fig-2x4 { grid-template-columns: 1fr 1fr 1fr 1fr; grid-template-rows: 1fr 1fr; --h: 32vh; }
+.fig-3x4 { grid-template-columns: 1fr 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; --h: 22vh; }
+.fig-4x4 { grid-template-columns: 1fr 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr 1fr; --h: 16vh; }
 
 /* -------------------------------------------
    ANIMATIONS
@@ -600,26 +641,36 @@ The top red bar title `data-title` defaults to the nearest transition page title
 </div>
 ```
 
-### 5.7 6-Image Comparison Grid
+### 5.7 Figure Layout System
 
-Used in TB slides to display multi-threshold / multi-VOV comparison plots (3 columns × 2 rows):
+Use `.fig` + preset class for image grids. Available presets: `fig-1`, `fig-1x2` through `fig-4x4` (rows×cols, max 4).
+
+**5 knobs** (override via `style="--knob:value"`):
+- `--w` width, `--h` height, `--x` horizontal shift, `--y` vertical shift, `--gap` spacing
+
+**Dual-layout** uses `--split` for ratio: `style="--split: 1fr 1fr;"` (default `4fr 6fr`)
 
 ```html
-<ul class="bullet-list" style="margin-bottom: 2px; margin-left: 0;"><li><strong>Run Title</strong></li></ul>
-<ul class="bullet-list" style="margin-bottom: 5px; font-size: 0.8em; margin-left: 0;">
-    <li>Top row: <strong>>120 ADC cut</strong> | Bottom row: <strong>>0 ADC cut</strong></li>
-</ul>
-<div class="image-grid"
-    style="grid-template-columns: repeat(3, 1fr); grid-template-rows: 1fr 1fr; gap: 8px; flex: 1; min-height: 0;">
-    <div class="figure-frame"><img src="..."><div class="caption">th=3 (>120)</div></div>
-    <!-- 6 figure-frames total -->
+<!-- fig-2x3: 2 rows × 3 cols | --w:width --h:height --x:horizontal --y:vertical --gap:spacing -->
+<div class="fig fig-2x3 reveal d2" style="--gap:8px;">
+    <div class="figure-frame"><img src="th5_nocut.png"><div class="caption">th=5 (no cut)</div></div>
+    <div class="figure-frame"><img src="th10_nocut.png"><div class="caption">th=10</div></div>
+    <div class="figure-frame"><img src="th20_nocut.png"><div class="caption">th=20</div></div>
+    <div class="figure-frame"><img src="th5_cut.png"><div class="caption">th=5 (cut)</div></div>
+    <div class="figure-frame"><img src="th10_cut.png"><div class="caption">th=10</div></div>
+    <div class="figure-frame"><img src="th20_cut.png"><div class="caption">th=20</div></div>
 </div>
 ```
 
-> **⚠️ Key constraints:**
-> - `grid-template-rows: 1fr 1fr` splits two equal rows; combined with `flex: 1; min-height: 0` to prevent overflow
-> - Bullets use `margin-bottom: 2px / 5px` compact mode, maximizing space for images
-> - `.figure-frame img` is capped at `max-height: 28vh`, ensuring two rows fit within the page
+> **⚠️ AI Generation Rule: Inline Comment is MANDATORY**
+>
+> When generating HTML with `.fig` containers, you **MUST** place an HTML comment on the same line or directly above, listing the layout and available knobs:
+> ```html
+> <!-- fig-2x3: 2行×3列 | --w:width --h:height --x:horizontal --y:vertical --gap:spacing -->
+> ```
+> This lets the user adjust parameters without consulting documentation.
+
+> For full reference with ASCII diagrams and all presets, see `reference/FIGURE_LAYOUTS.md`.
 
 ---
 
@@ -852,5 +903,7 @@ document.addEventListener('DOMContentLoaded', () => {
 | Caption font | `calc(var(--body-size) * 0.6)` ≈ 20px, follows global, no hardcoding |
 | slide-content padding | `20px 0` (not 60px), maximizes content area |
 | Dense bullet mode | `li style="margin-bottom: 10px;"` overrides default 30px, for content-heavy pages |
-| 6-image comparison grid | `grid-template-rows: 1fr 1fr; gap: 8px; flex: 1; min-height: 0` |
+| 6-image comparison grid | Use `.fig fig-2x3` with `--gap: 8px` |
+| Figure inline comment | **MANDATORY**: `<!-- fig-RxC: R行×C列 \| --w:width --h:height --x:horizontal --y:vertical --gap:spacing -->` above every `.fig` div |
+| `--split` (dual-layout) | `--split: 4fr 6fr` default; override with e.g. `--split: 1fr 1fr` |
 | data-title LaTeX | `innerHTML` + `MathJax.typesetPromise()` renders formulas in the red bar title |

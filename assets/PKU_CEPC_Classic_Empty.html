@@ -193,7 +193,8 @@
         .bullet-list li ul li::marker { color: var(--pku-red); font-size: 1em; } 
         
         .dual-layout {
-            display: grid; grid-template-columns: 4fr 6fr; gap: 40px; height: 100%;
+            --split: 4fr 6fr;
+            display: grid; grid-template-columns: var(--split); gap: 40px; height: 100%;
         }
         .left-col { display: flex; flex-direction: column; justify-content: flex-start; padding-top: 20px; padding-right: 40px; }
         .right-col { display: flex; flex-direction: column; justify-content: center; gap: 20px; min-height: 0; overflow: hidden; }
@@ -321,10 +322,68 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         .figure-frame .caption {
-            font-size: calc(var(--body-size) * 0.6);
+            font-size: calc(var(--body-size) * 0.5);
             color: #666;
             margin-top: 4px;
         }
+
+        /* ===========================================
+           FIGURE LAYOUT SYSTEM
+           5 knobs: --w(width) --h(height) --x(horizontal) --y(vertical) --gap(spacing)
+           =========================================== */
+        .fig {
+            --w: 100%;
+            --h: 100%;
+            --x: 0px;
+            --y: 0px;
+            --gap: 15px;
+            display: grid;
+            gap: var(--gap);
+            width: 100%;
+            flex: 1;
+            min-height: 0;
+            align-items: center;
+            justify-items: center;
+            transform: translate(var(--x), var(--y));
+        }
+        .fig img {
+            max-width: var(--w);
+            max-height: var(--h);
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 4px;
+        }
+        .fig .figure-frame img {
+            width: auto;
+            height: auto;
+        }
+        .fig .caption {
+            font-size: calc(var(--body-size) * 0.5);
+            color: #666;
+            text-align: center;
+            margin-top: 2px;
+        }
+        /* 1-column presets */
+        .fig-1   { grid-template-columns: 1fr; --h: 70vh; }
+        .fig-2x1 { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; --h: 40vh; }
+        .fig-3x1 { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr 1fr; --h: 28vh; }
+        .fig-4x1 { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr 1fr 1fr; --h: 20vh; }
+        /* 2-column presets */
+        .fig-1x2 { grid-template-columns: 1fr 1fr; --h: 65vh; }
+        .fig-2x2 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; --h: 38vh; }
+        .fig-3x2 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; --h: 28vh; }
+        .fig-4x2 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr 1fr 1fr; --h: 20vh; }
+        /* 3-column presets */
+        .fig-1x3 { grid-template-columns: 1fr 1fr 1fr; --h: 60vh; }
+        .fig-2x3 { grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr; --h: 35vh; }
+        .fig-3x3 { grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; --h: 25vh; }
+        .fig-4x3 { grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr 1fr; --h: 18vh; }
+        /* 4-column presets */
+        .fig-1x4 { grid-template-columns: 1fr 1fr 1fr 1fr; --h: 55vh; }
+        .fig-2x4 { grid-template-columns: 1fr 1fr 1fr 1fr; grid-template-rows: 1fr 1fr; --h: 32vh; }
+        .fig-3x4 { grid-template-columns: 1fr 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; --h: 22vh; }
+        .fig-4x4 { grid-template-columns: 1fr 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr 1fr; --h: 16vh; }
         
         .reveal {
             opacity: 0; transform: translateY(20px);
