@@ -170,11 +170,13 @@ All delivered HTML files must be fully self-contained — zero path dependencies
 **When user says `bundle` / `deliver`:**
 
 ```bash
-python3 {{FRONTEND_SLIDES_REPO_PATH}}/scripts/bundle-html.py <input.html> <output.html>
-# For in-place: use same path for both arguments
+python3 {{FRONTEND_SLIDES_REPO_PATH}}/scripts/bundle-html.py <input.html>
+# Output: <input>_bundle.html (auto-suffixed, never overwrites the original)
+# Optional: python3 .../bundle-html.py <input.html> <output.html>  (explicit output path)
 ```
 
-The script scans all `<img src>`, skips base64/http, converts local paths to `data:image/...;base64,...`, and overwrites in place.
+The script scans all `<img src>`, skips base64/http, converts local paths to `data:image/...;base64,...`.
+Output defaults to `<input>_bundle.html` — the original file is **never** overwritten.
 
 **Skip only if:** no new local image references were added since last bundle.
 **First PKU delivery:** NEVER skip.
