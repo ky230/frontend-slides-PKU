@@ -410,6 +410,7 @@ tr:nth-child(even) { background: #f5f0e3; }
    =========================================== */
 .fig {
     --w: 100%; --h: 100%; --x: 0px; --y: 0px; --gap: 15px;
+    --cap-size: calc(var(--body-size) * 0.5); --cap-y: 0px;
     display: grid; gap: var(--gap); width: 100%; flex: 1; min-height: 0;
     align-items: center; justify-items: center;
     transform: translate(var(--x), var(--y));
@@ -420,8 +421,9 @@ tr:nth-child(even) { background: #f5f0e3; }
 }
 .fig .figure-frame img { width: auto; height: auto; }
 .fig .caption {
-    font-size: calc(var(--body-size) * 0.5); color: #666;
+    font-size: var(--cap-size); color: #666;
     text-align: center; margin-top: 2px;
+    transform: translateY(var(--cap-y));
 }
 /* 1-column presets */
 .fig-1   { grid-template-columns: 1fr; --h: 70vh; }
@@ -645,13 +647,14 @@ The top red bar title `data-title` defaults to the nearest transition page title
 
 Use `.fig` + preset class for image grids. Available presets: `fig-1`, `fig-1x2` through `fig-4x4` (rows×cols, max 4).
 
-**5 knobs** (override via `style="--knob:value"`):
-- `--w` width, `--h` height, `--x` horizontal shift, `--y` vertical shift, `--gap` spacing
+**7 knobs** (override via `style="--knob:value"`):
+- Layout: `--w` width, `--h` height, `--x` horizontal shift, `--y` vertical shift, `--gap` spacing
+- Caption: `--cap-size` font size (default auto), `--cap-y` vertical offset
 
 **Dual-layout** uses `--split` for ratio: `style="--split: 1fr 1fr;"` (default `4fr 6fr`)
 
 ```html
-<!-- fig-2x3: 2 rows × 3 cols | --w:width --h:height --x:horizontal --y:vertical --gap:spacing -->
+<!-- fig-2x3: 2行×3列 | --w --h --x --y --gap --cap-size --cap-y -->
 <div class="fig fig-2x3 reveal d2" style="--gap:8px;">
     <div class="figure-frame"><img src="th5_nocut.png"><div class="caption">th=5 (no cut)</div></div>
     <div class="figure-frame"><img src="th10_nocut.png"><div class="caption">th=10</div></div>
@@ -666,7 +669,7 @@ Use `.fig` + preset class for image grids. Available presets: `fig-1`, `fig-1x2`
 >
 > When generating HTML with `.fig` containers, you **MUST** place an HTML comment on the same line or directly above, listing the layout and available knobs:
 > ```html
-> <!-- fig-2x3: 2行×3列 | --w:width --h:height --x:horizontal --y:vertical --gap:spacing -->
+> <!-- fig-2x3: 2行×3列 | --w --h --x --y --gap --cap-size --cap-y -->
 > ```
 > This lets the user adjust parameters without consulting documentation.
 
@@ -904,6 +907,6 @@ document.addEventListener('DOMContentLoaded', () => {
 | slide-content padding | `20px 0` (not 60px), maximizes content area |
 | Dense bullet mode | `li style="margin-bottom: 10px;"` overrides default 30px, for content-heavy pages |
 | 6-image comparison grid | Use `.fig fig-2x3` with `--gap: 8px` |
-| Figure inline comment | **MANDATORY**: `<!-- fig-RxC: R行×C列 \| --w:width --h:height --x:horizontal --y:vertical --gap:spacing -->` above every `.fig` div |
+| Figure inline comment | **MANDATORY**: `<!-- fig-RxC: R行×C列 \| --w --h --x --y --gap --cap-size --cap-y -->` above every `.fig` div |
 | `--split` (dual-layout) | `--split: 4fr 6fr` default; override with e.g. `--split: 1fr 1fr` |
 | data-title LaTeX | `innerHTML` + `MathJax.typesetPromise()` renders formulas in the red bar title |

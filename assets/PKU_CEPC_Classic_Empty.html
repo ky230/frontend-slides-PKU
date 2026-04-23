@@ -329,7 +329,7 @@
 
         /* ===========================================
            FIGURE LAYOUT SYSTEM
-           5 knobs: --w(width) --h(height) --x(horizontal) --y(vertical) --gap(spacing)
+           Knobs: --w --h --x --y --gap (layout) + --cap-size --cap-y (caption)
            =========================================== */
         .fig {
             --w: 100%;
@@ -337,6 +337,8 @@
             --x: 0px;
             --y: 0px;
             --gap: 15px;
+            --cap-size: calc(var(--body-size) * 0.5);
+            --cap-y: 0px;
             display: grid;
             gap: var(--gap);
             width: 100%;
@@ -359,10 +361,11 @@
             height: auto;
         }
         .fig .caption {
-            font-size: calc(var(--body-size) * 0.5);
+            font-size: var(--cap-size);
             color: #666;
             text-align: center;
             margin-top: 2px;
+            transform: translateY(var(--cap-y));
         }
         /* 1-column presets */
         .fig-1   { grid-template-columns: 1fr; --h: 70vh; }
