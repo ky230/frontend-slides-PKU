@@ -34,6 +34,7 @@ Create zero-dependency, animation-rich HTML presentations that run entirely in t
 | `reference/html-template.md` | HTML structure, JS features, quality standards | Phase 3: generation |
 | `reference/animation-patterns.md` | CSS/JS animation snippets | Phase 3: generation |
 | `reference/PKU_ACADEMIC_CLASSIC.md` | PKU template full spec (CSS/JS/Logo) | PKU mode activation |
+| `reference/FIGURE_LAYOUTS.md` | Figure Layout System: 16 presets + 5 knobs | PKU mode: image-heavy slides |
 | `scripts/bundle-html.py` | Embed local images as base64 | **User says `bundle` only** |
 | `scripts/extract-pptx.py` | PPT content extraction | **User provides `.pptx`** |
 | `scripts/deploy.sh` | Deploy to Vercel | **User says `deploy`** |
