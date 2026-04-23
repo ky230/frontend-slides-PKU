@@ -276,17 +276,17 @@ html, body {
 }
 
 /* Bullet Hierarchy */
-.bullet-list { margin-left: 0; }
+.bullet-list { margin-left: 0; font-size: var(--body-size); }
 .bullet-list li {
     list-style-type: disc;
-    font-size: var(--body-size); margin-bottom: 30px; line-height: 1.5;
+    font-size: inherit; margin-bottom: 30px; line-height: 1.5;
 }
 /* Dense mode: use li style="margin-bottom: 10px;" to override default 30px for content-heavy pages */
 .bullet-list li::marker { color: var(--pku-red); font-size: 1.1em; }
 /* L2: Red Dash */
 .bullet-list li ul li {
     list-style-type: '— ';
-    font-size: calc(var(--body-size) * 0.9);
+    font-size: 0.9em;
     margin-bottom: 20px;
 }
 .bullet-list li ul li::marker { color: var(--pku-red); font-size: 1em; }
