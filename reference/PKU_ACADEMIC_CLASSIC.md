@@ -271,7 +271,7 @@ html, body {
    ------------------------------------------- */
 .slide-content {
     flex: 1; width: 1760px; margin: 0 auto;
-    padding: 20px 0; overflow: hidden;
+    padding: 20px 0; overflow: visible;
     display: flex; flex-direction: column;
 }
 
@@ -569,15 +569,12 @@ The top red bar title `data-title` defaults to the nearest transition page title
 
 > **💡 Per-slide bullet margin fine-tuning:**
 >
-> By default, `.slide-content` has `overflow: hidden`, so negative `margin-left` on `<ul>` will be clipped. To push bullets **beyond** the normal `.slide-content` boundary on a specific slide:
+> `.slide-content` defaults to `overflow: visible`, so you can freely adjust `margin-left` on `<ul>` to any value:
+> - `margin-left: 0` — standard position (flush with content boundary)
+> - `margin-left: -40px` — push left beyond content boundary
+> - `margin-left: -80px` — maximum, aligns with red title bar left edge
 >
-> 1. Add `overflow: visible` to that slide's `.slide-content`:
->    `<div class="slide-content" style="overflow: visible;">`
-> 2. Use negative `margin-left` on the `<ul>`:
->    `<ul class="bullet-list" style="margin-left: -40px;">`
-> 3. Adjust `-40px` to `-80px` (maximum, aligns with red title bar left edge).
->
-> **⚠️ Do NOT use `list-style-position: inside`** — it changes the bullet-text spacing. Keep default `outside` and rely on `overflow: visible` instead.
+> **⚠️ Do NOT use `list-style-position: inside`** — it changes the bullet-text spacing. Keep default `outside` and adjust `margin-left` instead.
 
 ### 5.6 Highlight Box Usage
 
