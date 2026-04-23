@@ -17,6 +17,8 @@ Create zero-dependency, animation-rich HTML presentations that run entirely in t
 
 > **DO NOT auto-bundle.** `bundle-html.py` may ONLY run when the **user explicitly says `bundle` / `deliver` / `pack`**. After content injection, ask "Ready to bundle?" and WAIT. NEVER bundle on your own.
 
+> **DO NOT overwrite the original HTML when bundling.** The bundled output MUST be written to a **separate file** with a `_bundled` suffix (e.g., `slides.html` → `slides_bundled.html`). The original HTML with relative image paths is the **editable source of truth** — destroying it with base64 data makes future edits nearly impossible. NEVER use the same path for both `<input>` and `<output>` in `bundle-html.py`.
+
 > **DO NOT hand-write HTML skeletons.** In PKU mode, all CSS/JS/Logo/Header/Footer come from `init-slides.py` + the empty template. You ONLY inject content into placeholder pages.
 
 ---
@@ -166,14 +168,21 @@ Every `<section>` MUST be preceded by `<!-- [Slide N] Type: Title -->`. The scro
 
 All delivered HTML files must be fully self-contained — zero path dependencies, all images base64-embedded.
 
+> ⚠️ **NEVER overwrite the original HTML.** The bundled file MUST be a **separate file** with `_bundled` suffix. The original HTML (with relative `src` paths) is the editable source — once replaced by base64 blobs, it becomes effectively uneditable.
+
 **When user says `bundle` / `deliver`:**
 
 ```bash
-python3 {{FRONTEND_SLIDES_REPO_PATH}}/scripts/bundle-html.py <input.html> <output.html>
-# For in-place: use same path for both arguments
+# ✅ CORRECT — output to a separate _bundled file
+python3 {{FRONTEND_SLIDES_REPO_PATH}}/scripts/bundle-html.py input.html input_bundled.html
+
+# ❌ FORBIDDEN — NEVER use the same path for input and output
+# python3 .../bundle-html.py input.html input.html
 ```
 
-The script scans all `<img src>`, skips base64/http, converts local paths to `data:image/...;base64,...`, and overwrites in place.
+**Naming convention:** `<original_name>_bundled.html` (e.g., `my_talk.html` → `my_talk_bundled.html`).
+
+The script scans all `<img src>`, skips base64/http, converts local paths to `data:image/...;base64,...`.
 
 **Skip only if:** no new local image references were added since last bundle.
 **First PKU delivery:** NEVER skip.
