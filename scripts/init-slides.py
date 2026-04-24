@@ -105,7 +105,7 @@ def main():
             sup = ''
         if name == args.speaker:
             author_parts.append(
-                f'<u style="text-decoration: underline; text-underline-offset: 0.15em; '
+                f'<u style="text-decoration: underline; text-underline-offset: 0.25em; '
                 f'text-decoration-skip-ink: none;">{name}</u>{sup}'
             )
         else:
@@ -127,9 +127,9 @@ def main():
     if args.reference:
         if "|" in args.reference:
             nickname, url = args.reference.split("|", 1)
-            ref_html = f'\n            <p style="font-size: 0.8em;">Reference: <a href="{url.strip()}" target="_blank" style="color: #0000EE; text-decoration: underline; text-underline-offset: 0.15em; text-decoration-skip-ink: none;">{nickname.strip()}</a></p>'
+            ref_html = f'\n            <p style="font-size: 0.8em;">Reference: <a href="{url.strip()}" target="_blank" style="color: #0000EE; text-decoration: underline; text-underline-offset: 0.25em; text-decoration-skip-ink: none;">{nickname.strip()}</a></p>'
         else:
-            ref_html = f'\n            <p style="font-size: 0.8em;">Reference: <a href="{args.reference}" target="_blank" style="color: #0000EE; text-decoration: underline; text-underline-offset: 0.15em; text-decoration-skip-ink: none;">{args.reference}</a></p>'
+            ref_html = f'\n            <p style="font-size: 0.8em;">Reference: <a href="{args.reference}" target="_blank" style="color: #0000EE; text-decoration: underline; text-underline-offset: 0.25em; text-decoration-skip-ink: none;">{args.reference}</a></p>'
 
     injections.append(f"""
     <!-- [Slide {slide_idx}] Title Slide -->

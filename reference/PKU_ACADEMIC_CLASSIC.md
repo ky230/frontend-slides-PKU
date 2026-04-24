@@ -551,7 +551,7 @@ Insert after `</style>` and before `</head>`:
         <h2>{{Q2_Report_Type}}</h2>
     </div>
     <div class="author-info reveal d2">
-        <p><u style="text-decoration: underline; text-underline-offset: 0.15em; text-decoration-skip-ink: none;">{{Q4_Speaker}}</u><sup>1</sup>, {{Other_Authors}}<sup>N</sup></p>
+        <p><u style="text-decoration: underline; text-underline-offset: 0.25em; text-decoration-skip-ink: none;">{{Q4_Speaker}}</u><sup>1</sup>, {{Other_Authors}}<sup>N</sup></p>
         <p style="margin-top: 1rem;"><sup>1</sup> {{Q5_Affiliations}}</p>
         <!-- Additional affiliations numbered sequentially -->
         <p style="margin-top: 2rem; font-size: 0.8em;">{{Q6_Date}}</p>
@@ -898,7 +898,7 @@ document.addEventListener('DOMContentLoaded', () => {
 | Formulas | MathJax 3, inline `$...$`, display `$$...$$` |
 | Progress bar | Amber-gold `#d4a800` segmented |
 | Transition decoration | Left-side red gradient vertical line |
-| Speaker underline | `text-underline-offset: 0.15em; text-decoration-skip-ink: none;` |
+| Speaker underline | `text-underline-offset: 0.25em; text-decoration-skip-ink: none;` |
 | Affiliation labels | Superscript numbering `<sup>N</sup>` |
 | Footer center | Uses Q4-specified speaker name |
 | Transition titles | Must strictly correspond to Outline bullet order |
