@@ -294,6 +294,42 @@
         tr:nth-child(even) td { background: #f5f1e5; }
         tr:hover td { background: rgba(204,0,0,0.04); }
 
+        /* ===========================================
+           TABLE LAYOUT SYSTEM
+           Knobs: --w --x --y (position) + --tab-size (font)
+                  --pad-h --pad-v (cell padding)
+                  --cap-size --cap-y (caption)
+           =========================================== */
+        .tab {
+            --w: 100%;
+            --x: 0px;
+            --y: 0px;
+            --tab-size: calc(var(--body-size) * 0.6);
+            --pad-h: 16px;
+            --pad-v: 10px;
+            --cap-size: calc(var(--body-size) * 0.5);
+            --cap-y: 0px;
+            width: var(--w);
+            transform: translate(var(--x), var(--y));
+        }
+        .tab table {
+            width: 100%;
+            font-size: var(--tab-size);
+        }
+        .tab th {
+            padding: var(--pad-v) var(--pad-h);
+        }
+        .tab td {
+            padding: var(--pad-v) var(--pad-h);
+        }
+        .tab .caption {
+            font-size: var(--cap-size);
+            color: #666;
+            text-align: center;
+            margin-top: 4px;
+            transform: translateY(var(--cap-y));
+        }
+
         /* 图片网格 */
         .image-grid {
             display: grid;

@@ -335,6 +335,29 @@ td {
 }
 tr:nth-child(even) { background: #f5f0e3; }
 
+/* ===========================================
+   TABLE LAYOUT SYSTEM
+   Knobs: --w --x --y (position) + --tab-size (font)
+          --pad-h --pad-v (cell padding)
+          --cap-size --cap-y (caption)
+   =========================================== */
+.tab {
+    --w: 100%; --x: 0px; --y: 0px;
+    --tab-size: calc(var(--body-size) * 0.6);
+    --pad-h: 16px; --pad-v: 10px;
+    --cap-size: calc(var(--body-size) * 0.5); --cap-y: 0px;
+    width: var(--w);
+    transform: translate(var(--x), var(--y));
+}
+.tab table { width: 100%; font-size: var(--tab-size); }
+.tab th { padding: var(--pad-v) var(--pad-h); }
+.tab td { padding: var(--pad-v) var(--pad-h); }
+.tab .caption {
+    font-size: var(--cap-size); color: #666;
+    text-align: center; margin-top: 4px;
+    transform: translateY(var(--cap-y));
+}
+
 /* Image Grid */
 .image-grid {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(30%, 1fr));
@@ -675,6 +698,40 @@ Use `.fig` + preset class for image grids. Available presets: `fig-1`, `fig-1x2`
 > This lets the user adjust parameters without consulting documentation.
 
 > For full reference with ASCII diagrams and all presets, see `reference/FIGURE_LAYOUTS.md`.
+
+### 5.8 Table Layout System
+
+Wrap any `<table>` in a `<div class="tab">` to gain free positioning, font control, and caption support.
+
+**7 knobs** (override via `style="--knob:value"`):
+- Position: `--w` width, `--x` horizontal shift, `--y` vertical shift
+- Typography: `--tab-size` table font size (default `0.6 × body-size`)
+- Cell padding: `--pad-h` horizontal, `--pad-v` vertical
+- Caption: `--cap-size` font size, `--cap-y` vertical offset
+
+**Caption** is optional. When present, use `<div class="caption">` — it automatically renders centered, grey `#666`, matching figure captions.
+
+```html
+<!-- tab | --w --x --y --tab-size --pad-h --pad-v --cap-size --cap-y -->
+<div class="tab" style="--w:80%; --x:40px; --y:-10px; --tab-size:18px;">
+    <table>
+        <tr><th>Column A</th><th>Column B</th><th>Column C</th></tr>
+        <tr><td>1.23</td><td>4.56</td><td>7.89</td></tr>
+        <tr><td>0.12</td><td>3.45</td><td>6.78</td></tr>
+    </table>
+    <div class="caption">Tab. Description of the table content.</div>
+</div>
+```
+
+> **⚠️ AI Generation Rule: Inline Comment is MANDATORY**
+>
+> When generating HTML with `.tab` containers, you **MUST** place an HTML comment on the same line or directly above, listing the available knobs:
+> ```html
+> <!-- tab | --w --x --y --tab-size --pad-h --pad-v --cap-size --cap-y -->
+> ```
+> This lets the user adjust parameters without consulting documentation.
+
+> **💡 Caption is OFF by default.** Only add `<div class="caption">` when the user explicitly requests a table caption. When present, it inherits the same style as figure captions (centered, grey).
 
 ---
 
