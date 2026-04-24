@@ -515,6 +515,14 @@ class SlidePresentation {
         this.setupWheelNav();
 
         applyScale();
+
+        // Restore saved slide position (survives Live Server hot-reload)
+        const savedSlide = sessionStorage.getItem('savedSlideIndex');
+        if (savedSlide !== null) {
+            setTimeout(() => {
+                this.scroller.scrollTo({ top: parseInt(savedSlide) * 1080, behavior: 'instant' });
+            }, 50);
+        }
     }
 
     setupWheelNav() {
@@ -545,6 +553,10 @@ class SlidePresentation {
                     entry.target.classList.add('visible');
 
                     const index = Array.from(this.slides).indexOf(entry.target) + 1;
+
+                    // Persist current slide for Live Server
+                    sessionStorage.setItem('savedSlideIndex', index - 1);
+
                     if (this.pageNum) this.pageNum.innerText = index;
 
                     const segments = document.querySelectorAll('.progress-segment');

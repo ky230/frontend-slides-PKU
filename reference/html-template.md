@@ -156,8 +156,14 @@ Every presentation must include:
 2. **Intersection Observer** — For scroll-triggered animations:
    - Add `.visible` class when slides enter viewport
    - Trigger CSS transitions efficiently
+   - **Save current slide index to `sessionStorage`** on every slide change
 
-3. **Optional Enhancements** (match to chosen style):
+3. **Slide Position Persistence** — Survives Live Server hot-reloads:
+   - On each slide change, save index: `sessionStorage.setItem('savedSlideIndex', index)`
+   - On page load, restore: `this.scroller.scrollTo({ top: savedIndex * 1080, behavior: 'instant' })`
+   - Uses `setTimeout(…, 50)` to ensure DOM is ready before scrolling
+
+4. **Optional Enhancements** (match to chosen style):
    - Custom cursor with trail
    - Particle system background (canvas)
    - Parallax effects
@@ -165,7 +171,7 @@ Every presentation must include:
    - Magnetic buttons
    - Counter animations
 
-4. **Inline Editing** (only if user opted in during Phase 1 — skip entirely if they said No):
+5. **Inline Editing** (only if user opted in during Phase 1 — skip entirely if they said No):
    - Edit toggle button (hidden by default, revealed via hover hotzone or `E` key)
    - Auto-save to localStorage
    - Export/save file functionality
