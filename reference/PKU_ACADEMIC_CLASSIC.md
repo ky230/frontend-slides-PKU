@@ -311,7 +311,8 @@ html, body {
 }
 .image-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
 
-a { color: #0000ee; text-decoration: underline; text-decoration-skip-ink: none; }
+/* Hyperlink underline: offset prevents clipping descenders (p, y, g) and commas */
+a { color: #0000ee; text-decoration: underline; text-decoration-skip-ink: none; text-underline-offset: 7.5px; }
 
 /* Equal Two-Column */
 .two-col {
