@@ -87,6 +87,8 @@ When enhancing existing presentations, viewport fitting is the biggest risk:
 
 ## Phase 1: Content Discovery (New Presentations)
 
+> ⚠️ **PKU Academic Classic users:** Skip Phases 1-3. Your workflow is in [`hep-frontend-slides.md`](hep-frontend-slides.md) and [`PKU_ACADEMIC_CLASSIC.md`](reference/PKU_ACADEMIC_CLASSIC.md). Go directly to Phase 5 (Delivery).
+
 **Ask ALL questions in a single AskUserQuestion call** so the user fills everything out at once:
 
 **Question 1 — Purpose** (header: "Purpose"):
@@ -274,9 +276,18 @@ This captures each slide as a screenshot and combines them into a PDF. Perfect f
 
 1. **Run the export script:**
 
-   ```bash
-   bash scripts/export-pdf.sh <path-to-html> [output.pdf]
-   ```
+    ```bash
+    bash scripts/export-pdf.sh <path-to-html> [output.pdf] [--dpr N]
+    ```
+
+    **`--dpr` flag (resolution control):**
+    | `--dpr` | Resolution | Typical File Size (18 slides) | Use Case |
+    |---------|-----------|------------------------------|----------|
+    | `1` | 1920×1080 (1x) | ~12MB | Email/Slack sharing |
+    | `2` | 3840×2160 (2x) | ~24MB | Print quality |
+    | `3` (default) | 5760×3240 (3x) | ~48MB | Archival, max quality |
+
+    Recommendation: **use `--dpr 1`** for daily use; `--dpr 2` for final deliverables.
 
    If no output path is given, the PDF is saved next to the HTML file.
 
@@ -311,12 +322,17 @@ This captures each slide as a screenshot and combines them into a PDF. Perfect f
 
 ## Supporting Files
 
-| File                                               | Purpose                                                              | When to Read              |
-| -------------------------------------------------- | -------------------------------------------------------------------- | ------------------------- |
-| [STYLE_PRESETS.md](reference/STYLE_PRESETS.md)               | 12 curated visual presets with colors, fonts, and signature elements | Phase 2 (style selection) |
-| [viewport-base.css](reference/viewport-base.css)             | Mandatory responsive CSS — copy into every presentation              | Phase 3 (generation)      |
-| [html-template.md](reference/html-template.md)               | HTML structure, JS features, code quality standards                  | Phase 3 (generation)      |
-| [animation-patterns.md](reference/animation-patterns.md)     | CSS/JS animation snippets and effect-to-feeling guide                | Phase 3 (generation)      |
-| [scripts/extract-pptx.py](scripts/extract-pptx.py) | Python script for PPT content extraction                             | Phase 4 (conversion)      |
-| [scripts/deploy.sh](scripts/deploy.sh)             | Deploy slides to Vercel for instant sharing                          | Phase 6 (sharing)         |
-| [scripts/export-pdf.sh](scripts/export-pdf.sh)     | Export slides to PDF                                                 | Phase 6 (sharing)         |
+| File                                               | Purpose                                                              | When to Read              | Mode |
+| -------------------------------------------------- | -------------------------------------------------------------------- | ------------------------- | ---- |
+| [STYLE_PRESETS.md](reference/STYLE_PRESETS.md)               | 12 curated visual presets with colors, fonts, and signature elements | Phase 2 (style selection) | Free |
+| [viewport-base.css](reference/viewport-base.css)             | Mandatory responsive CSS — copy into every presentation              | Phase 3 (generation)      | Free |
+| [html-template.md](reference/html-template.md)               | HTML structure, JS features, code quality standards                  | Phase 3 (generation)      | Free |
+| [animation-patterns.md](reference/animation-patterns.md)     | CSS/JS animation snippets and effect-to-feeling guide                | Phase 3 (generation)      | Free |
+| [PKU_ACADEMIC_CLASSIC.md](reference/PKU_ACADEMIC_CLASSIC.md) | Full PKU spec: class index, HTML patterns, EAC convention            | PKU slide generation      | PKU |
+| [FIGURE_LAYOUTS.md](reference/FIGURE_LAYOUTS.md)             | `.fig` grid presets reference with ASCII diagrams                    | Image-only slides         | PKU |
+| [FINE_TUNING.md](reference/FINE_TUNING.md)                   | 12-knob cheat sheet for position/size adjustments                    | Fine-tuning               | PKU |
+| [scripts/init-slides.py](scripts/init-slides.py)   | Scaffold PKU slides from CLI arguments                               | PKU project init          | PKU |
+| [scripts/bundle-html.py](scripts/bundle-html.py)   | Embed all images as base64 for portable delivery                     | PKU delivery              | PKU |
+| [scripts/extract-pptx.py](scripts/extract-pptx.py) | Python script for PPT content extraction                             | Phase 4 (conversion)      | Free |
+| [scripts/deploy.sh](scripts/deploy.sh)             | Deploy slides to Vercel for instant sharing                          | Phase 6 (sharing)         | Free |
+| [scripts/export-pdf.sh](scripts/export-pdf.sh)     | Export slides to PDF (supports `--dpr` flag)                         | Phase 6 (sharing)         | Both |

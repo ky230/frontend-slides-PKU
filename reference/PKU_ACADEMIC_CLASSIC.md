@@ -5,7 +5,7 @@ description: PKU Academic Classic presentation template — red-yellow palette, 
 
 # PKU Academic Classic — Full Style Specification
 
-> **Fully self-contained**: This file contains everything needed to generate PKU academic slides (CSS/JS/HTML structure/Logo base64). No external file dependencies.
+> **Reference spec for PKU Academic Classic.** CSS/JS source of truth is the template file (`assets/PKU_{CMS,CEPC}_Classic_Empty.html`). This doc covers: class index, HTML patterns, layout systems, generation rules, and the Element Annotation Convention (EAC).
 
 ---
 
@@ -77,411 +77,54 @@ HTML usage:
 
 ---
 
-## 3. Full CSS
+## 3. CSS Reference (Minimal)
 
-The following CSS must be embedded **verbatim** inside `<style>` tags:
+> 📌 **Source of truth:** `assets/PKU_{CMS,CEPC}_Classic_Empty.html` template file.
+> **Read the template directly.** This section only lists key variables and class names.
 
-> 📌 **Single Source of Truth is the `assets/PKU_{CMS,CEPC}_Classic_Empty.html` template file.**
-> This section is only a reference copy for manual AI generation. If inconsistent with the template, the template takes precedence.
+### 3.1 CSS Custom Properties (`:root`)
 
 ```css
-/* ===========================================
-   CSS CUSTOM PROPERTIES (Theme: PKU Red-Yellow Classic)
-   PKU Academic Presentation Style - Fixed Absolute Ratio (1920x1080)
-   =========================================== */
 :root {
     --bg-white: #fefefc;
     --pku-red: #cc0000;
     --pku-yellow: #ffff00;
     --text-dark: #1a1a1a;
-
     --font-body: 'Times New Roman', Times, serif;
     --font-comic: 'Comic Sans MS', 'Comic Sans', cursive;
-
     --title-size: 64px;
     --h1-size: 56px;
     --body-size: 34px;
-
     --footer-height: 48px;
     --header-height: 60px;
-
     --duration-normal: 0.5s;
 }
-
-/* Base Environment Reset */
-html, body {
-    height: 100%; width: 100%; margin: 0; padding: 0;
-    overflow: hidden; background: #1a1a1a;
-    color: var(--text-dark); font-family: var(--font-body);
-}
-* { box-sizing: border-box; }
-
-/* Smart Proportional Scaling Canvas */
-#scale-wrapper {
-    position: absolute;
-    width: 1920px; height: 1080px;
-    left: 50%; top: 50%;
-    transform-origin: center center;
-    background: var(--bg-white);
-    overflow: hidden;
-    box-shadow: 0 0 20px rgba(0,0,0,0.4);
-}
-
-/* Scroll Container */
-.slides-scroller {
-    position: absolute; left: 0; top: 0;
-    width: 100%; height: 100%;
-    overflow-y: auto;
-    scroll-snap-type: y mandatory;
-    scroll-behavior: smooth;
-}
-.slides-scroller::-webkit-scrollbar { display: none; }
-.slides-scroller { scrollbar-width: none; }
-
-/* -------------------------------------------
-   GLOBAL WIDGETS
-   ------------------------------------------- */
-.global-logos {
-    position: absolute; top: 12px; right: 0;
-    height: calc(var(--header-height) - 4px);
-    display: flex; align-items: center; justify-content: flex-end;
-    padding-right: 10px; z-index: 1001;
-    background: transparent;
-}
-.logo-img {
-    height: 130%;
-    object-fit: contain; margin-left: 5px;
-    border-radius: 50%;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-    background-color: white;
-}
-/* CMS Logo Override (CMS brand only) */
-.cms-logo {
-    border-radius: 4px;
-}
-
-.global-header {
-    position: absolute; top: 0; left: 0;
-    width: 1920px; height: var(--header-height);
-    background: var(--pku-red); z-index: 1000;
-    display: flex; align-items: center; padding-left: 30px;
-    transition: transform 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-.global-header.hidden { transform: translateY(-100%); }
-.header-text {
-    color: var(--pku-yellow); font-size: 38px; font-weight: bold;
-    font-family: var(--font-body);
-}
-
-.progress-container {
-    position: absolute; bottom: var(--footer-height); left: 0;
-    width: 1920px; height: 4px; z-index: 1001;
-    display: flex; gap: 2px;
-}
-.progress-segment {
-    flex: 1; height: 100%;
-    background: rgba(255,255,255,0.15);
-    transition: background 0.4s ease, box-shadow 0.4s ease;
-}
-.progress-segment.active {
-    background: #d4a800;
-    box-shadow: 0 0 4px rgba(212,168,0,0.5);
-}
-
-.global-footer {
-    position: absolute; bottom: 0; left: 0;
-    width: 1920px; height: var(--footer-height);
-    background: var(--pku-red); z-index: 1000;
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 0 20px; color: white; font-weight: bold;
-    font-family: var(--font-body); font-size: 24px;
-    box-shadow: 0 -4px 6px rgba(0,0,0,0.1);
-}
-.footer-left { text-align: left; flex: 2; }
-.footer-center { text-align: center; flex: 1; }
-.footer-right { text-align: right; flex: 2; display: flex; justify-content: flex-end; gap: 10px; }
-
-/* -------------------------------------------
-   SLIDE BASE STYLES
-   ------------------------------------------- */
-.slide {
-    width: 1920px; height: 1080px;
-    overflow: hidden; scroll-snap-align: start;
-    display: flex; flex-direction: column; position: relative;
-    padding-bottom: var(--footer-height);
-    background-color: var(--bg-white);
-    background-image: 
-        linear-gradient(rgba(139, 69, 19, 0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(139, 69, 19, 0.035) 1px, transparent 1px);
-    background-size: 50px 50px;
-}
-.slide.normal-slide {
-    padding-top: var(--header-height);
-}
-
-/* -------------------------------------------
-   TITLE SLIDE
-   ------------------------------------------- */
-.title-slide { justify-content: center; }
-.title-banner {
-    width: 1920px; background: var(--pku-red); color: white;
-    text-align: center; padding: 60px 20px; margin-bottom: 40px;
-    margin-top: 80px;
-}
-.title-banner h1 {
-    font-family: var(--font-body); font-size: var(--title-size);
-    margin: 0 0 20px 0; font-weight: bold;
-}
-.title-banner h2 {
-    font-family: var(--font-body); font-size: calc(var(--title-size) * 0.5);
-    margin: 0; font-weight: bold;
-}
-.highlight-yellow { color: var(--pku-yellow); }
-.author-info {
-    margin-top: 60px; text-align: center;
-    font-size: var(--body-size); line-height: 1.8;
-    color: var(--text-dark);
-}
-.author-info p { margin: 10px 0; }
-
-/* -------------------------------------------
-   TRANSITION SLIDE
-   ------------------------------------------- */
-.transition-slide {
-    justify-content: center; align-items: center; text-align: center;
-    position: relative;
-}
-.transition-slide::before {
-    content: '';
-    position: absolute;
-    left: 120px; top: 80px; bottom: 80px;
-    width: 6px;
-    background: linear-gradient(180deg, transparent 0%, var(--pku-red) 15%, var(--pku-red) 85%, transparent 100%);
-    border-radius: 3px;
-}
-.transition-text {
-    font-family: var(--font-comic); font-size: 64px;
-    font-weight: bold; color: var(--text-dark);
-    padding-left: 60px;
-}
-
-/* -------------------------------------------
-   CONTENT SLIDES
-   ------------------------------------------- */
-.slide-content {
-    flex: 1; width: 1760px; margin: 0 auto;
-    padding: 20px 0; overflow: visible;
-    display: flex; flex-direction: column;
-}
-
-/* Bullet Hierarchy */
-.bullet-list { margin-left: 0; font-size: var(--body-size); }
-.bullet-list li {
-    list-style-type: disc;
-    font-size: inherit; margin-bottom: 30px; line-height: 1.5;
-}
-/* Dense mode: use li style="margin-bottom: 10px;" to override default 30px for content-heavy pages */
-.bullet-list li::marker { color: var(--pku-red); font-size: 1.1em; }
-/* L2: Red Dash */
-.bullet-list li ul li {
-    list-style-type: '— ';
-    font-size: 0.9em;
-    margin-bottom: 20px;
-}
-.bullet-list li ul li::marker { color: var(--pku-red); font-size: 1em; }
-
-/* Text-Image Mixed Layout */
-.dual-layout {
-    --split: 4fr 6fr;
-    display: grid; grid-template-columns: var(--split); gap: 40px; height: 100%;
-}
-.left-col {
-    display: flex; flex-direction: column;
-    justify-content: flex-start; padding-top: 20px; padding-right: 40px;
-}
-.right-col {
-    display: flex; flex-direction: column;
-    justify-content: center; gap: 20px;
-    min-height: 0; overflow: hidden;
-}
-.image-box {
-    flex: 1; min-height: 0;
-    display: flex; justify-content: center; align-items: center;
-}
-.image-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
-
-/* Hyperlink underline: offset prevents clipping descenders (p, y, g) and commas */
-a { color: #0000ee; text-decoration: underline; text-decoration-skip-ink: none; text-underline-offset: 7.5px; }
-
-/* Equal Two-Column */
-.two-col {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 60px; height: 100%; align-items: start;
-}
-
-/* Table Styles */
-table {
-    width: 100%; border-collapse: collapse;
-    font-size: calc(var(--body-size) * 0.6); margin: 25px 0;
-    background: var(--bg-white); box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-th { 
-    background: var(--pku-red); color: white; padding: 12px 15px; 
-    font-weight: bold; text-align: center; border: 1px solid var(--pku-red);
-}
-td { 
-    padding: 10px 15px; border: 1px solid #ddd; text-align: center; 
-}
-tr:nth-child(even) { background: #f5f0e3; }
-
-/* ===========================================
-   TABLE LAYOUT SYSTEM
-   Knobs: --w --x --y (position) + --tab-size (font)
-          --pad-h --pad-v (cell padding)
-          --cap-size --cap-y (caption)
-   =========================================== */
-.tab {
-    --w: 100%; --x: 0px; --y: 0px;
-    --tab-size: calc(var(--body-size) * 0.6);
-    --pad-h: 16px; --pad-v: 10px;
-    --cap-size: calc(var(--body-size) * 0.5); --cap-y: 0px;
-    width: var(--w);
-    transform: translate(var(--x), var(--y));
-}
-.tab table { width: 100%; font-size: var(--tab-size); }
-.tab th { padding: var(--pad-v) var(--pad-h); }
-.tab td { padding: var(--pad-v) var(--pad-h); }
-.tab .caption {
-    font-size: var(--cap-size); color: #666;
-    text-align: center; margin-top: 4px;
-    transform: translateY(var(--cap-y));
-}
-
-/* Image Grid */
-.image-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(30%, 1fr));
-    gap: 15px; width: 100%; align-items: center; justify-items: center;
-}
-.image-grid img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 4px; }
-.image-grid .grid-label { grid-column: 1 / -1; font-weight: bold; text-align: center; color: var(--pku-red); padding-bottom: 5px; }
-
-/* Highlight Conclusion Box */
-.highlight-box {
-    background: rgba(204, 0, 0, 0.06);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(204, 0, 0, 0.20);
-    border-left: 6px solid var(--pku-red);
-    padding: 25px 30px; margin: 30px 0;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    font-size: calc(var(--body-size) * 0.95); line-height: 1.6;
-}
-.highlight-box strong { color: var(--pku-red); }
-
-/* Important Box */
-.important-box {
-    background: rgba(59, 130, 246, 0.06);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(59, 130, 246, 0.20);
-    border-left: 6px solid #3b82f6;
-    padding: 25px 30px; margin: 30px 0;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    font-size: calc(var(--body-size) * 0.95); line-height: 1.6;
-}
-.important-box strong { color: #3b82f6; }
-
-/* Warning Box */
-.warning-box {
-    background: rgba(245, 158, 11, 0.06);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(245, 158, 11, 0.20);
-    border-left: 6px solid #f59e0b;
-    padding: 25px 30px; margin: 30px 0;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    font-size: calc(var(--body-size) * 0.95); line-height: 1.6;
-}
-.warning-box strong { color: #f59e0b; }
-
-/* Tip Box */
-.tip-box {
-    background: rgba(34, 197, 94, 0.06);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(34, 197, 94, 0.20);
-    border-left: 6px solid #22c55e;
-    padding: 25px 30px; margin: 30px 0;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    font-size: calc(var(--body-size) * 0.95); line-height: 1.6;
-}
-.tip-box strong { color: #22c55e; }
-
-/* Image + Caption */
-.figure-frame { text-align: center; overflow: hidden; }
-.figure-frame img {
-    max-width: 100%; max-height: 28vh; object-fit: contain;
-    border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-.figure-frame .caption {
-    font-size: calc(var(--body-size) * 0.5); color: #666; margin-top: 4px;
-}
-
-/* ===========================================
-   FIGURE LAYOUT SYSTEM
-   5 knobs: --w(width) --h(height) --x(horizontal) --y(vertical) --gap(spacing)
-   =========================================== */
-.fig {
-    --w: 100%; --h: 100%; --x: 0px; --y: 0px; --gap: 15px;
-    --cap-size: calc(var(--body-size) * 0.5); --cap-y: 0px;
-    display: grid; gap: var(--gap); width: 100%; flex: 1; min-height: 0;
-    align-items: center; justify-items: center;
-    transform: translate(var(--x), var(--y));
-}
-.fig img {
-    max-width: var(--w); max-height: var(--h); width: 100%; height: 100%;
-    object-fit: contain; border-radius: 4px;
-}
-.fig .figure-frame img { width: auto; height: auto; }
-.fig .caption {
-    font-size: var(--cap-size); color: #666;
-    text-align: center; margin-top: 2px;
-    transform: translateY(var(--cap-y));
-}
-/* 1-column presets */
-.fig-1   { grid-template-columns: 1fr; --h: 70vh; }
-.fig-2x1 { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; --h: 40vh; }
-.fig-3x1 { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr 1fr; --h: 28vh; }
-.fig-4x1 { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr 1fr 1fr; --h: 20vh; }
-/* 2-column presets */
-.fig-1x2 { grid-template-columns: 1fr 1fr; --h: 65vh; }
-.fig-2x2 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; --h: 38vh; }
-.fig-3x2 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; --h: 28vh; }
-.fig-4x2 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr 1fr 1fr; --h: 20vh; }
-/* 3-column presets */
-.fig-1x3 { grid-template-columns: 1fr 1fr 1fr; --h: 60vh; }
-.fig-2x3 { grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr; --h: 35vh; }
-.fig-3x3 { grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; --h: 25vh; }
-.fig-4x3 { grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr 1fr; --h: 18vh; }
-/* 4-column presets */
-.fig-1x4 { grid-template-columns: 1fr 1fr 1fr 1fr; --h: 55vh; }
-.fig-2x4 { grid-template-columns: 1fr 1fr 1fr 1fr; grid-template-rows: 1fr 1fr; --h: 32vh; }
-.fig-3x4 { grid-template-columns: 1fr 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; --h: 22vh; }
-.fig-4x4 { grid-template-columns: 1fr 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr 1fr; --h: 16vh; }
-
-/* -------------------------------------------
-   ANIMATIONS
-   ------------------------------------------- */
-.reveal {
-    opacity: 0; transform: translateY(20px);
-    transition: opacity var(--duration-normal), transform var(--duration-normal);
-}
-.slide.visible .reveal { opacity: 1; transform: translateY(0); }
-.d1 { transition-delay: 0.1s; }
-.d2 { transition-delay: 0.2s; }
-.d3 { transition-delay: 0.3s; }
 ```
+
+### 3.2 Class Name Index
+
+| Class | Purpose | Key Properties |
+|-------|---------|----------------|
+| `.slide` | Base slide (1920×1080) | `scroll-snap-align: start` |
+| `.slide.normal-slide` | Content slide | `padding-top: var(--header-height)` |
+| `.title-slide` | Title page | No header, centered |
+| `.transition-slide` | Section divider | Red vertical line, Comic Sans |
+| `.slide-content` | Content wrapper | `width: 1760px; margin: 0 auto` |
+| `.bullet-list` | L1 bullets | Red disc, `var(--body-size)` |
+| `.bullet-list li ul li` | L2 bullets | Red dash `—`, 0.9em |
+| `.dual-layout` | Left-right grid | `--split: 4fr 6fr` (adjustable) |
+| `.left-col` / `.right-col` | Grid children | Flex column |
+| `.highlight-box` | Red conclusion box | Left border red |
+| `.important-box` | Blue note box | Left border blue |
+| `.warning-box` | Orange warning box | Left border orange |
+| `.tip-box` | Green tip box | Left border green |
+| `.fig` | Figure grid system | `--w --h --x --y --gap` knobs |
+| `.fig-RxC` | Grid presets | `fig-1` through `fig-4x4` |
+| `.tab` | Table wrapper | `--w --x --y --tab-size` knobs |
+| `.reveal .d1/.d2/.d3` | Animations | Fade-up on scroll, staggered delay |
+| `.highlight-yellow` | Yellow keyword | Title highlight |
+| `.image-grid` | Legacy image grid | `auto-fit, minmax(30%, 1fr)` |
+
 
 ---
 
@@ -669,6 +312,8 @@ The top red bar title `data-title` defaults to the nearest transition page title
 
 ### 5.7 Figure Layout System
 
+> **Scope:** Best for **image-only regions** — backup slides, full-page plots, pure figure grids. For mixed bullet+image slides, use **§5.9 Absolute-Position** pattern instead.
+
 Use `.fig` + preset class for image grids. Available presets: `fig-1`, `fig-1x2` through `fig-4x4` (rows×cols, max 4).
 
 **7 knobs** (override via `style="--knob:value"`):
@@ -700,6 +345,8 @@ Use `.fig` + preset class for image grids. Available presets: `fig-1`, `fig-1x2`
 > For full reference with ASCII diagrams and all presets, see `reference/FIGURE_LAYOUTS.md`.
 
 ### 5.8 Table Layout System
+
+> **Scope:** Best for **standalone tables** filling a content region. For tables nested inside bullet lists, use inline `font-size`/`margin` on `<table>` directly — see `FINE_TUNING.md` §3.
 
 Wrap any `<table>` in a `<div class="tab">` to gain free positioning, font control, and caption support.
 
@@ -733,29 +380,77 @@ Wrap any `<table>` in a `<div class="tab">` to gain free positioning, font contr
 
 > **💡 Caption is OFF by default.** Only add `<div class="caption">` when the user explicitly requests a table caption. When present, it inherits the same style as figure captions (centered, grey).
 
+### 5.9 Absolute-Position Mixed Layout (Complex Slides)
+
+For slides where bullets, images, tables, and footnotes each need **independent** position/size control:
+
+```html
+<div class="slide-content" style="position: relative; overflow: visible;">
+
+    <!-- [BULLETS]: Main analysis bullets | KNOBS: top(100px), left(0), width(48%), font-size(1.85em) -->
+    <div style="position: absolute; top: 100px; left: 0px; width: 48%;">
+        <ul class="bullet-list reveal d2" style="font-size: 1.85em;">
+            <li>First point</li>
+        </ul>
+    </div>
+
+    <!-- [IMAGES]: 2x2 analysis plots | KNOBS: top(70px), right(0), width(55%), gap(6px) -->
+    <div class="reveal d3"
+        style="position: absolute; top: 70px; right: 0px; width: 55%; display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+        <img src="attachment/plot1.png" style="width: 100%;">
+        <img src="attachment/plot2.png" style="width: 100%;">
+    </div>
+
+    <!-- [FOOTNOTE]: Variable definitions | KNOBS: font-size(0.85em), margin-top(6px), margin-left(-20px) -->
+    <div style="font-size: 0.85em; color: #888; margin-top: 6px; margin-left: -20px;">
+        <sup>†</sup> Footnote text
+    </div>
+
+</div>
+```
+
+**When to use:** Any slide where bullets and images need *independent* tuning. This is the **most common pattern** for CMS analysis slides.
+
+**When NOT to use:** Simple full-width bullet content → default `.slide-content` flow. Simple left-right split → `.dual-layout`.
+
+> ⚠️ **Parent must have `position: relative`**. Children use `position: absolute` with `top/left/right/width` for placement.
+
+### 5.10 Comment-Out Convention (Hiding Content)
+
+To hide content without deleting (e.g., removing a plot row pending reviewer feedback):
+
+```html
+<!-- [HIDDEN]: QCD DR row — removed per reviewer request, keeping for restoration
+<div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 6px;">
+    <img src="attachment/qcd_met.png">
+    ...
+</div>
+-->
+```
+
+Always include a `[HIDDEN]:` tag with a brief reason.
+
 ---
 
-## 6. Full JavaScript
+## 6. JavaScript Reference (Minimal)
 
-The following JS must be embedded **verbatim** inside `<script>` tags (before `</body>`):
+> 📌 **Source of truth:** `assets/PKU_{CMS,CEPC}_Classic_Empty.html` template file.
+> **Read the template directly.** JS is copied verbatim by `init-slides.py`.
 
-> 📌 **Single Source of Truth is the `assets/PKU_{CMS,CEPC}_Classic_Empty.html` template file.**
-> This section is only a reference copy for manual AI generation. If inconsistent with the template, the template takes precedence.
+### Key Components
 
-```javascript
-// 1. Smart Proportional Scaling Engine
-function applyScale() {
-    const wrapper = document.getElementById('scale-wrapper');
-    if (!wrapper) return;
-    const targetWidth = 1920;
-    const targetHeight = 1080;
-    const scale = Math.min(window.innerWidth / targetWidth, window.innerHeight / targetHeight);
-    wrapper.style.transform = `translate(-50%, -50%) scale(${scale})`;
-}
-window.addEventListener('resize', applyScale);
+| Component | Function | Notes |
+|-----------|----------|-------|
+| `applyScale()` | 1920×1080 → viewport scaling | `Math.min(w/1920, h/1080)` |
+| `SlidePresentation` | Keyboard/wheel/scroll nav | Arrow keys, Space, G (go-to), F (fullscreen) |
+| `IntersectionObserver` | Scroll-triggered `.visible` class | Triggers `.reveal` animations |
+| `sessionStorage` | Persists slide position | Survives Live Server hot-reload |
+| Progress bar | Segmented amber `#d4a800` | Stops at "Back Up" transition |
+| Go-to overlay | `G` key → input slide number | Enter confirms, Esc cancels |
 
-// 2. Interaction Manager
-class SlidePresentation {
+
+---
+
     constructor() {
         this.slides = document.querySelectorAll('.slide');
         if (this.slides.length === 0) return;
@@ -980,3 +675,58 @@ document.addEventListener('DOMContentLoaded', () => {
 | Figure inline comment | **MANDATORY**: `<!-- fig-RxC: R行×C列 \| --w --h --x --y --gap --cap-size --cap-y -->` above every `.fig` div |
 | `--split` (dual-layout) | `--split: 4fr 6fr` default; override with e.g. `--split: 1fr 1fr` |
 | data-title LaTeX | `innerHTML` + `MathJax.typesetPromise()` renders formulas in the red bar title |
+| Element Annotation | **MANDATORY**: `<!-- [TYPE]: desc \| KNOBS: param(value), ... -->` above every positioned element |
+| Comment-out hidden | `<!-- [HIDDEN]: reason ... -->` wrapping hidden content |
+
+---
+
+## 8. Element Annotation Convention (EAC)
+
+> **NON-NEGOTIABLE**: Every independently positioned element MUST have an annotation comment.
+
+### Format
+
+```
+<!-- [TYPE]: description | KNOBS: param1(current_value), param2(current_value), ... -->
+```
+
+### Type Tags
+
+| Tag | Used For |
+|-----|----------|
+| `[BULLETS]` | Bullet list containers |
+| `[IMAGES]` | Image grids, single images, figure regions |
+| `[TABLE]` | Tables (standalone or nested) |
+| `[HIGHLIGHT-BOX]` | `.highlight-box`, `.important-box`, etc. |
+| `[FOOTNOTE]` | Footer annotations, definitions |
+| `[CAPTION]` | Standalone captions below image regions |
+| `[HIDDEN]` | Commented-out content |
+| `[CUSTOM]` | Anything else (e.g., decorative elements) |
+
+### Rules
+
+1. **KNOBS list** — Only list parameters the user is likely to adjust. Focus on position (`top`, `left`, `right`, `width`) and size (`font-size`, `gap`). Skip `color`, `display`, etc.
+2. **Current values** — Always show current value in parens: `top(100px)`, not just `top`.
+3. **One line** — Keep the comment to a single line. Abbreviate descriptions if needed.
+4. **Update on edit** — When modifying an element's style, update the KNOBS values in the comment.
+5. **Skip for trivial elements** — Simple `<li>` items, inline `<strong>`, etc. don't need annotations. Only annotate *container-level* elements with position/size properties.
+
+### Examples
+
+```html
+<!-- [BULLETS]: Systematic uncertainties list | KNOBS: top(100px), left(0), width(48%), font-size(1.85em) -->
+<div style="position: absolute; top: 100px; left: 0px; width: 48%;">
+    <ul class="bullet-list reveal d2" style="font-size: 1.85em;"> ... </ul>
+</div>
+
+<!-- [IMAGES]: Prefit control plots 2x4 | KNOBS: top(3%), left(-3.5%), width(110%) -->
+<div class="reveal d1" style="position: absolute; top: 3%; left: -3.5%; width: 110%;">
+    <div class="fig fig-2x4" style="--gap: 10px;"> ... </div>
+</div>
+
+<!-- [TABLE]: Signal yields summary | KNOBS: font-size(0.75em), margin-left(-20px), width(110%) -->
+<table style="font-size: 0.75em; margin-left: -20px; width: 110%;"> ... </table>
+
+<!-- [FOOTNOTE]: Jet matching definitions | KNOBS: font-size(0.85em), margin-top(6px) -->
+<div style="font-size: 0.85em; color: #888; margin-top: 6px;"> ... </div>
+```
