@@ -57,16 +57,19 @@ graph TD
     Bundle[Bundle<br>bundle-html.py<br>Base64 自包含打包]
     Output[单 HTML 文件交付]
     Export[Optional: PDF Export<br>export-pdf.sh]
+    Deploy["🌐 托管到网站<br>CERN EOS Web / GitHub Pages"]
     End((Finish))
 
     Start --> LogoScan --> QA --> Scaffold --> Content --> FineTuning
     FineTuning -->|"指令: 交付 / Bundle"| Bundle --> Output
     Output -->|"可选: 导出 PDF"| Export --> End
+    Output -->|"可选: 在线托管"| Deploy --> End
     Output --> End
 
     style QA fill:#ffcccc,stroke:#cc0000,stroke-width:2px
     style Scaffold fill:#ffcccc,stroke:#cc0000,stroke-width:2px
     style Bundle fill:#adf,stroke:#333,stroke-width:2px
+    style Deploy fill:#d4edda,stroke:#28a745,stroke-width:2px
 ```
 
 ---
@@ -96,7 +99,7 @@ https://github.com/user-attachments/assets/7acc9292-5fa3-424e-9d57-2e364f658788
    | # | 问题 | 对应位置 | 默认值 |
    |---|------|---------|--------|
    | Q0 | 选择 Logo：自动扫描 `assets/logos/`，问你用哪些 | Logo 栏 | PKU + CMS |
-   | Q1 | 报告主标题？哪些关键词标黄？ | `<h1>` title-banner + footer-left | 无（必填） |
+   | Q1 | 报告主标题？哪些关键词 highlight？ | `<h1>` title-banner + footer-left | 无（必填） |
    | Q2 | 报告类型/会议名称？ | `<h2>` title-banner + footer-right | 无（必填） |
    | Q3 | 作者列表？ | author-info | 无（必填） |
    | Q4 | 演讲者是谁？（扉页加下划线、footer 居中） | author-info + footer-center | 无（必填） |

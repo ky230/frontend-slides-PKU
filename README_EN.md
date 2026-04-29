@@ -57,16 +57,19 @@ graph TD
     Bundle[Bundle<br>bundle-html.py<br>Base64 self-contained packaging]
     Output[Single HTML file delivery]
     Export[Optional: PDF Export<br>export-pdf.sh]
+    Deploy["🌐 Deploy to Web<br>CERN EOS Web / GitHub Pages"]
     End((Finish))
 
     Start --> LogoScan --> QA --> Scaffold --> Content --> FineTuning
     FineTuning -->|"Command: bundle / deliver"| Bundle --> Output
     Output -->|"Optional: export PDF"| Export --> End
+    Output -->|"Optional: host online"| Deploy --> End
     Output --> End
 
     style QA fill:#ffcccc,stroke:#cc0000,stroke-width:2px
     style Scaffold fill:#ffcccc,stroke:#cc0000,stroke-width:2px
     style Bundle fill:#adf,stroke:#333,stroke-width:2px
+    style Deploy fill:#d4edda,stroke:#28a745,stroke-width:2px
 ```
 
 ---
@@ -96,7 +99,7 @@ https://github.com/user-attachments/assets/7acc9292-5fa3-424e-9d57-2e364f658788
    | # | Question | Target Location | Default |
    |---|----------|----------------|---------|
    | Q0 | Logo selection: auto-scans `assets/logos/`, asks which to use | Logo bar | PKU + CMS |
-   | Q1 | Main title? Keywords to highlight yellow? | `<h1>` title-banner + footer-left | Required |
+   | Q1 | Main title? Keywords to highlight? | `<h1>` title-banner + footer-left | Required |
    | Q2 | Report type / meeting name? | `<h2>` title-banner + footer-right | Required |
    | Q3 | Author list? | author-info | Required |
    | Q4 | Speaker? (underlined on title, centered in footer) | author-info + footer-center | Required |
