@@ -1,0 +1,9 @@
+# Track only the 3 bundled logos; user-added logos stay local.
+# Users can freely add their own logos (e.g. ATLAS_logo.png, ALICE_logo.svg)
+# without polluting the upstream repo. `git pull` stays clean.
+*
+!.gitignore
+!PKU_logo.jpeg
+!CMS_logo.png
+!CEPC_logo.png
+!CERN_logo.png

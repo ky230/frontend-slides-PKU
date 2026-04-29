@@ -15,7 +15,7 @@ import sys
 try:
     from pptx import Presentation
 except ImportError:
-    print("❌ 未找到 python-pptx 库，请使用 pip install python-pptx 安装")
+    print("❌ python-pptx not found. Install with: pip install python-pptx")
     sys.exit(1)
 
 

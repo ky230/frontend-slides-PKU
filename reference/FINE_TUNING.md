@@ -40,7 +40,7 @@
 | **Horizontal offset** | `margin-left` | `<table>` | -40–40px | 0 | `margin-left: -20px` |
 | **Table width** | `width` | `<table>` | 80–120% | 100% | `width: 110%` |
 | **Cell padding** | `padding` | `<th>/<td>` | 2–12px | 10px 15px | `padding: 3px 8px` |
-| **Header background** | `background` | `<tr>` | — | `var(--pku-red)` | `rgba(139,0,0,0.08)` (light) |
+| **Header background** | `background` | `<tr>` | — | `var(--theme-primary)` | `rgba(139,0,0,0.08)` (light) |
 
 > **Nested tables** (inside `<li>`): Use `font-size: 0.75em` on `<table>` for proportional sizing relative to bullet text.
 
@@ -101,10 +101,33 @@
 
 | Box Type | Class | Border Color | Use Case |
 |----------|-------|-------------|----------|
-| Red conclusion | `.highlight-box` | `var(--pku-red)` | Key results, status summary |
+| Red conclusion | `.highlight-box` | `var(--theme-highlight)` | Key results, status summary |
 | Blue note | `.important-box` | `#3b82f6` | Technical details, methodology |
 | Orange warning | `.warning-box` | `#f59e0b` | Caveats, limitations |
 | Green tip | `.tip-box` | `#22c55e` | Recommendations, next steps |
+
+---
+
+## 7.5. Inline Text Highlight
+
+Use `.highlight-accent` to highlight key terms inside bullet text. Color follows `--theme-highlight` (default: PKU-Red `#cc0000` on light backgrounds).
+
+```html
+<!-- Basic highlight -->
+<li>The observed <span class="highlight-accent">excess at 95 GeV</span> is 2.8σ local.</li>
+
+<!-- Bold + highlight -->
+<li>Result: <strong><span class="highlight-accent">μ = 1.03 ± 0.12</span></strong></li>
+
+<!-- Highlight inside sub-bullet -->
+<li>Systematic uncertainties:
+    <ul>
+        <li><span class="highlight-accent">JES</span> dominates the btag category</li>
+    </ul>
+</li>
+```
+
+> **颜色由框架自动管理**: 正文页使用 `--theme-highlight`，扉页由框架自动适配，用户无需额外处理。
 
 ---
 
@@ -141,3 +164,49 @@
     </table>
 </li>
 ```
+
+---
+
+## 9. Terminal & Code Blocks (`.mac-terminal`)
+
+### 9.1 Container-Level Layout
+
+| Adjustment | Property | Where | Range | Default | Example |
+|------------|----------|-------|-------|---------|---------|
+| **Overall top offset** | `margin-top` | `.slide-content` | -40–60px | 0 | `margin-top: 20px` |
+| **Overall left offset** | `padding-left` | `.slide-content` | 0–60px | 0 | `padding-left: 30px` |
+| **Two-col gap** | `gap` | `.two-col` | 10–60px | 30px | `gap: 20px` |
+| **Two-col top** | `margin-top` | `.two-col` | -40–60px | 0 | `margin-top: 10px` |
+| **Column vertical** | `padding-top` | `.left-col` / `.right-col` | 0–40px | 0 | `padding-top: 10px` |
+
+### 9.2 Per-Terminal Knobs
+
+| Adjustment | Property | Where | Range | Default | Example |
+|------------|----------|-------|-------|---------|---------|
+| **Terminal accent** | `--term-accent` | `.mac-terminal` | any color | `#39d353` | `--term-accent: #89b4fa` |
+| **Terminal top** | `margin-top` | `.mac-terminal` | -20–40px | 0 | `margin-top: 10px` |
+| **Terminal left** | `margin-left` | `.mac-terminal` | -20–40px | 0 | `margin-left: -10px` |
+| **Terminal width** | `width` | `.mac-terminal` | 80–110% | 100% | `width: 105%` |
+| **Code font size** | `font-size` | `.mac-terminal-code` | 11–16px | clamp(11px,1.3vw,14px) | `font-size: 13px` |
+| **Code line-height** | `line-height` | `.mac-terminal-code` | 1.4–2.0 | 1.65 | `line-height: 1.5` |
+| **Stacked gap** | `gap` | Column wrapper | 10–40px | 20px | `gap: 15px` |
+| **Line reveal delay** | `data-delay` | `.term-line` | 0–5000ms | per-line | `data-delay="800"` |
+| **Viewport trigger** | `threshold` | JS observer | 0–1.0 | 0.5 | (code change only) |
+
+### 9.3 Element Labels (Required)
+
+When a slide contains **2+ terminals**, each terminal **must** have a `<!-- [ELEMENT] -->` comment above it:
+
+```html
+<!-- [LEFT: Terminal Command Output] -->
+<div class="mac-terminal" style="margin-top: 0; margin-left: 0; width: 100%;">
+    ...
+</div>
+
+<!-- [RIGHT: Python Code Display] -->
+<div class="mac-terminal" style="--term-accent: #61afef; margin-top: 0; margin-left: 0; width: 100%;">
+    ...
+</div>
+```
+
+> **Rule:** Every `.mac-terminal` must expose `margin-top`, `margin-left`, `width` in `style=""`. Every `.mac-terminal-code` inside it must expose `font-size` if overriding the default.

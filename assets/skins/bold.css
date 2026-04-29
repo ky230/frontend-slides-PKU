@@ -1,0 +1,59 @@
+/* PKU Skin: Bold — 橙色卡片 + 深色渐变 */
+/* Google Fonts: Archivo+Black&family=Space+Grotesk:wght@400;500;700 */
+
+:root {
+    --theme-primary: #ec5f18f1;
+    --theme-accent: #f3ecdb;
+    --theme-progress: #f3ecdb;
+    --theme-bg: #2d2d2d;
+    --theme-text: #ffffff;
+    --font-body: 'Times New Roman', Times, serif;
+}
+
+html,
+body {
+    background: #1a1a1a;
+}
+
+.slide {
+    background-color: var(--theme-bg);
+    background-image:
+        radial-gradient(ellipse at 85% 15%, rgba(236, 95, 24, 0.15) 0%, transparent 45%),
+        radial-gradient(ellipse at 15% 85%, rgba(243, 236, 219, 0.086) 0%, transparent 40%),
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+    background-size: cover, cover, 60px 60px, 60px 60px;
+}
+
+.title-banner h1 {
+    font-family: var(--font-body);
+}
+
+table tr:nth-child(even) td {
+    background: #3a3a3a;
+}
+
+table td {
+    border-color: #444;
+    color: #eee;
+}
+
+.highlight-box {
+    background: color-mix(in srgb, var(--theme-highlight) 18%, transparent) !important;
+}
+
+.important-box {
+    background: rgba(59, 130, 246, 0.18) !important;
+}
+
+.warning-box {
+    background: rgba(245, 158, 11, 0.18) !important;
+}
+
+.tip-box {
+    background: rgba(34, 197, 94, 0.18) !important;
+}
+
+a {
+    color: #58a6ff;
+}

@@ -1,0 +1,25 @@
+/* PKU Skin: Classic — 北大红黄白 (默认, 无覆盖) */
+/* Google Fonts: none */
+
+/* Terminal overrides for light background (Atom One Light palette) */
+.mac-terminal { border-color: rgba(0,0,0,0.1); box-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.08); }
+.mac-terminal-bar { background: linear-gradient(180deg, #e8e8ea, #d4d4d8); border-bottom-color: rgba(0,0,0,0.15); }
+.mac-terminal-title { color: #6b6b6b; }
+.mac-terminal-body { background: #fafafa; }
+.mac-terminal-code { color: #383a42; }
+.mac-terminal-lined .code-line::before { color: #a0a1a7; }
+
+.term-keyword  { color: #a626a4; }
+.term-func     { color: #4078f2; }
+.term-string   { color: #50a14f; }
+.term-comment  { color: #a0a1a7; }
+.term-num      { color: #986801; }
+.term-highlight { color: #e45649; background: rgba(228,86,73,0.1); }
+.term-prompt   { color: #50a14f; }
+.term-cmd      { color: #4078f2; }
+.term-dim      { color: #a0a1a7; }
+.term-green    { color: #50a14f; }
+.term-type     { color: #0184bc; }
+.term-tag      { color: #e45649; }
+.term-attr     { color: #986801; }
+.term-cursor   { color: #383a42; }

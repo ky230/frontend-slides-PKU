@@ -3,10 +3,7 @@
 </h1>
 
 <p align="center" style="color: #64748b; font-size: 0.95rem; font-family: sans-serif; font-weight: 400;">
-  A Claude Code / Gemini skill for creating stunning, animation-rich HTML presentations — from scratch or by converting PowerPoint files.
-</p>
-<p align="center" style="color: #94a3b8; font-size: 0.8rem;">
-  一个用 HTML 制作惊艳、富动画演示文稿的 AI 技能——支持单文件极致便携，或由 PPT 一键转换。
+  An AI skill for creating stunning, animation-rich academic HTML presentations — dynamic multi-logo, 10 color skins + DIY customization.
 </p>
 
 <p align="center">
@@ -27,11 +24,23 @@
 ---
 
 > [!NOTE]
-> **Acknowledgments** — This project is forked from [@zarazhangrui/frontend-slides](https://github.com/zarazhangrui/frontend-slides/tree/main), retaining all original features (PPT extraction, responsive viewport, 12 visual presets).
+> **Credits** — This project is forked from [@zarazhangrui/frontend-slides](https://github.com/zarazhangrui/frontend-slides/tree/main).
 > 
-> **What's New** — Introduces the **PKU Academic Classic** template, providing strict typographic constraints and scaffold automation for formal group meeting presentations in CMS/CEPC and similar collaborations.
+> **Additions** — Introduces **PKU Academic Classic** academic template: dynamic multi-logo injection, 10 color skins + DIY customization, strict typographic constraints and scaffold automation.
 > 
-> 💡 **Style Easter Egg:** Transition slide headings use `'Comic Sans MS'` — a tribute to the geeky contrast aesthetic seen in early CERN CMS reports. Falls back to `cursive` if the font is unavailable.
+> 💡 **Style Easter Egg:** Transition slide titles use `'Comic Sans MS'` — a tribute to the geeky contrast aesthetic from early CERN CMS reports.
+
+---
+
+## ⚡ Quick Start (3 Steps)
+
+| Step | Action | Description |
+|------|--------|-------------|
+| **1. Plan + Scaffold** | `python3 init-slides.py --title ... --out talk.html` | Answer Q0–Q10 → generates 1920×1080 skeleton with Logo/Header/Footer |
+| **2. Content + Fine-tune** | *(AI fills → you preview → iterate)* | AI injects figures/tables/formulas, you fine-tune layout in natural language |
+| **3. Bundle + (PDF)** | `python3 bundle-html.py talk.html` | All images embedded as Base64 → single self-contained HTML |
+
+> 💡 **Optional:** `bash export-pdf.sh talk_bundle.html` converts to PDF for email/print (see parameter table below).
 
 ---
 
@@ -39,142 +48,239 @@
 
 ```mermaid
 graph TD
-    %% Node Definitions
     Start((Start))
-    Mode{Choose Mode}
-    PPT[(Optional:<br>PPTX File)]
-    
-    PPT2[Phase 0: Extract<br>scripts/extract-pptx.py<br>Extract Text & Resources]
-    Scaffold[Phase 0: Scaffold<br>scripts/init-slides.py<br>Generate 1920x1080 PKU Skeleton]
-    Presets[Phase 0: Discovery<br>reference/STYLE_PRESETS.md<br>Choose from 12 Styles]
-    
-    Content[Phase 1 & 2: Generation<br>AI Agent Auto-fills Text/Images/Math]
-    FineTuning[Phase 3: Fine Tuning<br>User-driven Layout Adjustments]
-    Bundle[Phase 4: Delivery<br>scripts/bundle-html.py<br>Inline-compress Local Images to Base64]
-    
-    Output[Single HTML File Delivered]
-    Export[Phase 5: Share<br>scripts/export-pdf.sh<br>Export High-res PDF]
+    LogoScan[Logo Scan<br>Scan assets/logos/]
+    QA[Pre-flight Q&A<br>Q0–Q10 mandatory confirmation]
+    Scaffold[Scaffold<br>init-slides.py<br>Generate 1920x1080 skeleton]
+    Content[Content Generation<br>AI fills text/figures/formulas]
+    FineTuning[Fine Tuning<br>User-driven layout adjustments]
+    Bundle[Bundle<br>bundle-html.py<br>Base64 self-contained packaging]
+    Output[Single HTML file delivery]
+    Export[Optional: PDF Export<br>export-pdf.sh]
     End((Finish))
 
-    %% Connections
-    Start --> PPT
-    Start -->|No PPT| Mode
-    PPT -->|Provide PPT File| PPT2
-    PPT2 --> Mode
-    
-    Mode -->|PKU Academic Mode| Scaffold
-    Mode -->|Free Style Mode| Presets
-    
-    Scaffold --> Content
-    Presets --> Content
-    
-    Content --> FineTuning
-    FineTuning -->|"Command: Deliver / Bundle"| Bundle
-    Bundle --> Output
-    Output -->|"Optional Command: Export"| Export
+    Start --> LogoScan --> QA --> Scaffold --> Content --> FineTuning
+    FineTuning -->|"Command: bundle / deliver"| Bundle --> Output
+    Output -->|"Optional: export PDF"| Export --> End
     Output --> End
-    Export --> End
 
-    %% Styles
-    style Mode fill:#f9f,stroke:#333
+    style QA fill:#ffcccc,stroke:#cc0000,stroke-width:2px
     style Scaffold fill:#ffcccc,stroke:#cc0000,stroke-width:2px
     style Bundle fill:#adf,stroke:#333,stroke-width:2px
-    style Export fill:#bbf,stroke:#333,stroke-width:2px
 ```
 
 ---
 
-## 💡 Three Usage Scenarios
+## 💡 How to Use
 
-You **only need to describe your requirements to the AI in natural language** — it will automatically orchestrate the correct script pipeline behind the scenes to handle all the technical work.
+Simply **describe your needs in natural language to the AI** — it will automatically orchestrate the correct script pipeline.
 
 > [!TIP]
-> It is highly recommended to have the Agent enter Plan mode before starting, especially with the [superpowers writing-plans](https://github.com/obra/superpowers/tree/main/skills/writing-plans) skill. It's best to plan your requirements page by page in advance: e.g., what images p1 needs, what bullets p2 should contain.
+> It's highly recommended to have your Agent enter Plan mode before starting. Consider using [superpowers writing-plans](https://github.com/obra/superpowers/tree/main/skills/writing-plans). Plan your requirements page-by-page in advance.
 
-### 🏛️ (1) PKU Academic Mode
-
-https://github.com/user-attachments/assets/2824cfd7-fcb3-4581-ba68-2e40b0ce3830
-
+https://github.com/user-attachments/assets/7acc9292-5fa3-424e-9d57-2e364f658788
 
 ```text
 /hep-frontend-slides
 
-> "Use the PKU_CMS classic layout to create slides for next week's CMS group meeting:
-> p1 mainly covers Motivation, listing...
-> p2 explains the impact of the 120 ADC cut, with a 6-image comparison grid...
+> "Using PKU_CMS classic layout, create slides for next week's CMS group meeting:
+> p1 covers Motivation, listing...
+> p2 explains the 120 ADC cut impact with a 6-plot comparison grid...
 > p3 summarizes conclusions with a highlight box..."
 ```
+
 **The Agent will:**
-1. Before generating any HTML code, **it will mandatorily prompt you to confirm** the following academic specification details:
-   | # | Question | Mapped to | Default |
-   |---|---------|-----------|---------|
-   | Q0 | Choose brand: CMS or CEPC? | Logo + footer | None (required) |
-   | Q1 | Main report title? Which keywords to highlight in yellow? | `<h1>` title-banner + footer-left | None (required) |
-   | Q2 | Report type / meeting name? | `<h2>` title-banner + footer-right | None (required) |
-   | Q3 | Author list? | author-info | None (required) |
-   | Q4 | Who is the speaker? (underlined on title slide, centered in footer) | author-info + footer-center | None (required) |
-   | Q5 | Affiliation list? | author-info | None (required) |
+
+1. Before generating any HTML, **it must confirm** the following academic specifications:
+
+   | # | Question | Target Location | Default |
+   |---|----------|----------------|---------|
+   | Q0 | Logo selection: auto-scans `assets/logos/`, asks which to use | Logo bar | PKU + CMS |
+   | Q1 | Main title? Keywords to highlight yellow? | `<h1>` title-banner + footer-left | Required |
+   | Q2 | Report type / meeting name? | `<h2>` title-banner + footer-right | Required |
+   | Q3 | Author list? | author-info | Required |
+   | Q4 | Speaker? (underlined on title, centered in footer) | author-info + footer-center | Required |
+   | Q5 | Affiliation list? | author-info | Required |
    | Q6 | Report date? | author-info | Today's date |
    | Q7 | Reference citation? | author-info | Optional |
-   | Q8 | Outline list? | Outline + transition slides | None (required) |
-   | Q9 | HTML output path? | `init-slides.py --out` | None (required, user-specified) |
-2. Once collected, it triggers `init-slides.py` to instantly lay out a 1920x1080 skeleton with dual institutional logos and strict typographic constraints.
-3. After rendering, it opens the page for you to preview. **You can use the VSCode Live Server extension to view the result in real time in your browser**.
-4. ⭐️ **Key Enhancement: Continuous Layout Fine-tuning**. Unlike traditional one-shot generation tools, you can repeatedly issue instructions for modifications like directing an assistant (e.g., "The text on page 3 is too large — shrink it and add a red highlight-box").
-5. **Only when the layout fully meets your requirements**, issue the **"bundle/deliver"** command to the AI. It will embed all local images as Base64, delivering a fully self-contained single-file HTML.
-6. 💡 **Presentation Shortcuts**: In PKU mode HTML, press **`F`** to enter/exit browser fullscreen; press **`G`** to open the go-to-slide dialog — type a page number and hit Enter to jump directly.
+   | Q8 | Outline list? | Outline + transition slides | Required |
+   | Q9 | HTML output path? | `init-slides.py --out` | Required |
+   | Q10 | Color skin? | `init-slides.py --skin` | classic |
 
-### ⚡️ (2) Free Style Mode
+2. After collecting all answers, triggers `init-slides.py` to instantly scaffold a **1920×1080** strictly-formatted skeleton with multi-logo support.
 
-https://github.com/user-attachments/assets/bcabacb0-73f5-4612-9b50-c3f7670c57ad
-
-
-```text
-/hep-frontend-slides
-
-> "In Free mode, create a set of slides about the latest LLM developments, 10–15 pages"
-```
-**The Agent will:**
-1. Ask about your specific content requirements (slide content, copy, images).
-2. Ask about the overall feeling and tone you want (impressive? exciting? calm?).
-3. Generate 3 visual style screenshot previews for you to compare and choose from.
-4. Generate the complete presentation in your chosen style, available for visual preview in the browser or Live Server.
-5. ⭐️ **Continuous Layout Fine-tuning**: Keep having the Agent refine details until perfect.
-6. When fully satisfied, issue the **"bundle/deliver"** command to execute the final packaging.
-
-### 🔁 (3) Convert .pptx to Web Slides
-```text
-/hep-frontend-slides
-
-> "Convert TB_Meeting.pptx into web slides / Convert my presentation.pptx to a web slideshow"
-```
-**The Agent will:**
-1. Automatically extract all text content, speaker notes, and losslessly extract all image assets from the original PPT.
-2. Present the extracted content outline for your confirmation.
-3. Let you freely select your preferred new visual style.
-4. One-click generate a complete HTML presentation with images and text (including all your original assets).
-5. ⭐️ **Continuous Layout Fine-tuning**: Flexibly re-layout areas where machine conversion was too rigid.
-6. Finally, when you are satisfied that everything is pixel-perfect, issue the **"bundle/deliver"** command to package and seal.
+3. Renders the page for preview — **use VSCode Live Server extension for real-time browser viewing**.
 
 ---
 
-## 🤖 Auto-connect with Any AI
+### 📦 Built-in Slide Elements
 
-No more manual file copying. `hep-frontend-slides.md` contains the full set of system constraints (covering token control, canvas ratios, and anti-corruption flow control).
-**Follow these steps to let your AI Agent download and bind everything automatically:**
+All content elements supported by the PKU Academic Classic template:
+
+| Element | Description | HTML Markup |
+|---------|-------------|-------------|
+| **Bullet List** | L1 red disc + L2 red dash | `<ul class="bullet-list">` |
+| **Sub-bullet** | Indented secondary bullets | `<ul>` nested in `<li>` |
+| **Hyperlink** | Blue underlined links (opens new tab) | `<a href="..." target="_blank">` |
+| **Highlight Accent** | Theme-colored keyword emphasis | `<span class="highlight-accent">` |
+| **MathJax** | Inline `$...$` / display `$$...$$` formulas | Auto-rendered |
+| **Highlight Box** | 🔴 Red conclusion box | `<div class="highlight-box">` |
+| **Important Box** | 🔵 Blue important info box | `<div class="important-box">` |
+| **Warning Box** | 🟠 Orange warning box | `<div class="warning-box">` |
+| **Tip Box** | 🟢 Green tip box | `<div class="tip-box">` |
+| **Figure Grid** | Multi-image grid (1×1 to 4×4) | `<div class="fig fig-2x4">` |
+| **Table** | Academic data table with caption | `<div class="tab">` |
+| **Terminal (animated)** | Typewriter animation + auto-scroll | `.mac-terminal` + `data-delay` |
+| **Terminal (static)** | Code display + line numbers | `.mac-terminal-lined` |
+| **Multi-language code** | C++ / Python / JS / HTML / Rust | Different `--term-accent` colors |
+
+> 💡 See all elements rendered live: [Online Skin Preview](https://ky230.github.io/Html-slides-public/Hfrontend-slides-PKU-skin/classic/index.html)
+
+---
+
+### ⭐️ Core Enhancement: Continuous Fine-tuning
+
+Unlike traditional one-shot generators, you can iteratively refine the layout like directing an assistant (e.g., *"Page 3 text is too large, shrink it and add a red highlight-box"*).
+
+Every adjustable element has a standardized comment block listing all tunable parameters:
+
+```html
+<!-- FINE TUNING: 
+     - bullet-list: adjust 'font-size' and 'margin-top'
+     - boxes: adjust 'margin' and 'font-size'
+-->
+
+<!-- [BULLETS]: Main analysis | KNOBS: top(100px), left(0), width(48%), font-size(1.85em) -->
+```
+
+See `reference/FINE_TUNING.md` for the complete 12-category parameter cheat sheet.
+
+#### 🔧 Manual Fine-tuning Primer (HTML/CSS Quick Reference)
+
+If you prefer editing HTML directly rather than through AI:
+
+| Property | Effect | Units | Example |
+|----------|--------|-------|---------|
+| `margin-top` | Push element down | `px` or `%` | `margin-top: 20px` |
+| `margin-left` | Push right (negative=left) | `px` or `%` | `margin-left: -40px` |
+| `font-size` | Text size | `em` (relative) or `px` | `font-size: 1.6em` |
+| `width` | Region width | `%` or `px` | `width: 55%` |
+| `gap` | Grid/column spacing | `px` | `gap: 8px` |
+| `top` / `left` / `right` | Absolute position offset | `px` or `%` | `top: 100px` |
+
+> 💡 **Tip:** The Fine-Tuning annotation system is already comprehensive — you can simply ask the AI in natural language.
+> Example: *"Move the figure on page 5 left by 20px, shrink text to 1.6em"*
+
+---
+
+4. **Only when the layout fully meets your requirements**, issue the **"bundle/deliver"** command. It embeds all local images as Base64, delivering a fully self-contained single HTML file.
+
+5. 💡 **Presentation shortcuts**: Press **`F`** to toggle fullscreen; press **`G`** to open the go-to dialog — type a page number and press Enter to jump.
+
+---
+
+### 📄 Export PDF (Optional)
+
+```bash
+bash scripts/export-pdf.sh <input.html> [output.pdf] [options]
+```
+
+| Flag | Default | Description |
+|------|---------|-------------|
+| *(positional 1)* | — | Input HTML path (required) |
+| `[output.pdf]` | `<input>_export.pdf` | Output PDF path |
+| `--dpr N` | `3` | Device Pixel Ratio — controls screenshot resolution |
+| `--compact` | off | Use 1280×720 viewport (50-70% smaller files) |
+
+**Resolution × File Size Reference:**
+
+| `--dpr` | Viewport | 18-slide size | Use Case |
+|---------|----------|---------------|----------|
+| `1` | 1920×1080 | ~12MB | Daily sharing (Slack/email) |
+| `2` | 3840×2160 | ~24MB | High-quality print |
+| `3` *(default)* | 5760×3240 | ~48MB | Archive / publication |
+| `1 --compact` | 1280×720 | ~6MB | Quick preview |
+
+> ⚠️ **Prerequisites:** Node.js + npm required (Playwright auto-installs on first run).
+> PDF preserves colors/fonts/layout but **not animations** (static screenshot export).
+
+---
+
+### 🗣️ Prompt Examples by Stage
+
+**Stage 1 — Launch:**
+```text
+/hep-frontend-slides
+Using PKU+CMS logos, create 20-page pre-approval slides titled "Search for BSM H→ττ",
+highlight "BSM" and "H→ττ", use classic skin.
+```
+
+**Stage 2 — Fine-tuning:**
+```text
+Page 5 figure is too small, enlarge to width: 80%, reduce margin-top to 10px.
+Add a warning-box on page 8 with text "Preliminary results only".
+```
+
+**Stage 3 — Deliver:**
+```text
+bundle
+```
+
+**Stage 3b — PDF export:**
+```text
+Export PDF with --dpr 2 for smaller file size
+```
+
+---
+
+## 🌐 Instant Sharing — HTML Hosting
+
+Bundled HTML files **embed all images** (Base64) — no extra uploads needed. Drop the single-file HTML onto any static hosting and it **renders instantly** — no more emailing `.pdf` / `.pptx` back and forth. Edit anytime, always online.
+
+| Platform | URL Format | Best For |
+|----------|-----------|----------|
+| **CERN EOS Web** | `https://{your_cms_web}.web.cern.ch/` | Internal CERN user sharing |
+| **GitHub Pages** | `https://{username}.github.io/{repo}/` | Public sharing |
+
+> 💡 **Live examples:**
+> - GitHub Pages: [ky230.github.io/Html-slides-public](https://ky230.github.io/Html-slides-public/)
+> - CERN EOS Web: [hig-25006.web.cern.ch/HTML_SLIDES](https://hig-25006.web.cern.ch/HTML_SLIDES/)
+
+**CERN EOS Web deployment:**
+```bash
+# Copy bundled HTML to EOS web directory
+cp talk_bundle.html /eos/user/{initial}/{username}/www/slides/
+# Access via https://{username}.web.cern.ch/slides/talk_bundle.html
+```
+
+**GitHub Pages deployment:**
+```bash
+# Push bundled HTML to a public repo
+cp talk_bundle.html /path/to/your-pages-repo/
+cd /path/to/your-pages-repo && git add . && git commit -m "add slides" && git push
+# Access via https://{username}.github.io/{repo}/talk_bundle.html
+```
+
+> ⚠️ **Note:** Bundle HTML files are typically large (10-50MB). GitHub has a 100MB single-file limit. For very large decks, use CERN EOS Web.
+
+---
+
+## 🤖 Auto-connect to Any AI
+
+No manual file copying. `hep-frontend-slides.md` contains the full system constraints (token control, canvas ratio, anti-corruption flow control).
+**Follow these steps to let your AI Agent self-install:**
 
 ### 1️⃣ Clone the Repository
-Clone this repository to your computer or server:
 ```bash
 git clone https://github.com/ky230/frontend-slides-PKU.git
 ```
-*(After cloning, copy and note the absolute path of the folder, e.g., `/Users/name/frontend-slides-PKU`)*
+*(Copy the absolute path of the folder, e.g., `/Users/name/frontend-slides-PKU`)*
 
-### 2️⃣ Copy the Installation Prompt
-Copy the system prompt corresponding to your AI below and paste it directly to the agent (the AI will intelligently replace `{{FRONTEND_SLIDES_REPO_PATH}}` with the local absolute path you provide, binding the system in one step):
+### 2️⃣ Copy the Install Prompt
+Copy the prompt matching your AI and paste it (the AI will auto-replace `{{FRONTEND_SLIDES_REPO_PATH}}` with your local path):
 
 <details open>
-<summary><b>Gemini / Antigravity / Cursor / Cline (IDE-based Agents)</b></summary>
+<summary><b>Gemini / Antigravity / Cursor / Cline (IDE Agents)</b></summary>
 
 ```text
 ⚠️ SYSTEM INSTRUCTION: 
@@ -203,194 +309,111 @@ claude "Read the hep-frontend-slides.md file from the frontend-slides-PKU direct
 </details>
 
 > [!NOTE]
-> **Do I need to manually edit any source code after cloning?** No. The codebase itself has zero hard-coded paths. The only thing you need to do is paste the installation prompt above to your AI, and it will automatically complete the `{{FRONTEND_SLIDES_REPO_PATH}}` → your local absolute path binding.
-
-
----
-
-## 🎨 Original Visual Presets
-
-*If you prefer the "Free Style" mode over PKU Academic when choosing modes, you will unlock 12 stunning web aesthetic presets meticulously designed by the original author:*
-
-| # | File | Style | Category |
-|---|---|---|---|
-| 01 | `style_01_bold_signal.html` | **Bold Signal** — Orange card + dark gradient | 🌑 Dark |
-| 02 | `style_02_electric_studio.html` | **Electric Studio** — White & blue split panel | 🌑 Dark |
-| 03 | `style_03_creative_voltage.html` | **Creative Voltage** — Electric blue + neon yellow split | 🌑 Dark |
-| 04 | `style_04_dark_botanical.html` | **Dark Botanical** — Dark night + warm gradient orbs | 🌑 Dark |
-| 05 | `style_05_notebook_tabs.html` | **Notebook Tabs** — Paper card + colorful tabs | ☀️ Light |
-| 06 | `style_06_pastel_geometry.html` | **Pastel Geometry** — Soft blue BG + pill geometry | ☀️ Light |
-| 07 | `style_07_split_pastel.html` | **Split Pastel** — Peach & lavender dual-tone split | ☀️ Light |
-| 08 | `style_08_vintage_editorial.html` | **Vintage Editorial** — Cream BG + geometric retro type | ☀️ Light |
-| 09 | `style_09_neon_cyber.html` | **Neon Cyber** — Cyberpunk neon + particle BG | ✨ Specialty |
-| 10 | `style_10_terminal_green.html` | **Terminal Green** — Hacker terminal + scan lines | ✨ Specialty |
-| 11 | `style_11_swiss_modern.html` | **Swiss Modern** — Bauhaus grid + red geometry | ✨ Specialty |
-| 12 | `style_12_paper_ink.html` | **Paper & Ink** — Literary + drop caps + quote effects | ✨ Specialty |
----
-
-## 🔨 DIY — Create Your Own Template
-
-You don't have to stick with PKU or Free mode — you can create a **third mode** entirely defined by your own organization.
-
-<details>
-<summary><b>▸ Expand Full DIY Tutorial (5-Step Process)</b></summary>
-
-Below is the complete workflow we've validated in practice, organized in order **from intuition to rigor**:
-
-> [!IMPORTANT]
-> **Path Conventions:** This repository strictly follows a two-layer path separation principle —
-> 1. **Environment Injection Layer** (`.md` specs/workflows for the AI): Uniformly use `{{FRONTEND_SLIDES_REPO_PATH}}/...`, automatically replaced by the installation prompt.
-> 2. **Product Generation Layer** (HTML templates and scripts): Uniformly use relative paths `assets/xxx.png`. **Absolute paths in HTML `<img src>` are forbidden** — otherwise they will all break when someone else clones the repo.
-> 
-> Place logos in the `assets/` directory; avoid spaces in filenames. `bundle-html.py` will convert them all to Base64 at delivery time, so distribution is never an issue.
+> **Do I need to edit source code after cloning?** No. The codebase has zero hardcoded paths. Just paste the install prompt to your AI — it handles the `{{FRONTEND_SLIDES_REPO_PATH}}` binding automatically.
 
 ---
 
-### Step 1: Prepare Your Logo Assets
+## 📐 Architecture — File Dependency Map
 
-Place your institution's logo images (`.png` / `.jpeg`, transparent background recommended) into the repository's `assets/` directory:
-
+```mermaid
+graph TD
+    SKILL["hep-frontend-slides.md<br>(AI Skill Entry Point)"]
+    
+    subgraph Reference["Reference Docs (AI reads)"]
+        SPEC["PKU_ACADEMIC_CLASSIC.md<br>Core HTML/CSS Spec"]
+        FT["FINE_TUNING.md<br>12 Tunable Parameters"]
+        FIG["FIGURE_LAYOUTS.md<br>Figure Grid Presets"]
+        SKINREF["PKU_SKINS.md<br>10 Color Skins"]
+        TERM["TERMINAL_BOX.md<br>Terminal Components"]
+    end
+    
+    subgraph Scripts["Scripts (AI executes)"]
+        INIT["init-slides.py<br>Scaffold Generator"]
+        BUNDLE["bundle-html.py<br>Base64 Bundler"]
+        RENUM["renumber-slides.py<br>Slide Renumberer"]
+        PDF["export-pdf.sh<br>PDF Exporter"]
+    end
+    
+    subgraph Assets["Assets (Auto-loaded)"]
+        TPL["templates/Empty_template.html"]
+        LOGOS["logos/*.png / .jpeg"]
+        SKINS["skins/*.css"]
+        DIY["skins/diy.css.example"]
+    end
+    
+    SKILL -->|"Step 1: must read"| SPEC
+    SKILL -->|"Step 2: consult"| FT
+    SKILL -->|"Step 2: consult"| FIG
+    SKILL -->|"Step 2: consult"| TERM
+    SKILL -->|"Q10: skin"| SKINREF
+    
+    SKILL -->|"Step 1"| INIT
+    SKILL -->|"Step 2"| RENUM
+    SKILL -->|"Step 3.1"| BUNDLE
+    SKILL -->|"Step 3.2"| PDF
+    
+    INIT --> TPL
+    INIT --> LOGOS
+    INIT --> SKINS
+    SKINS -.->|"cp example"| DIY
 ```
-assets/
-├── PKU_logo.jpeg          # Already included
-├── CMS_logo.png           # Already included
-├── CEPC_logo.png          # Already included
-├── YOUR_University.png    # ← Add your own logo
-└── YOUR_Lab_logo.png      # ← Add your lab/collaboration logo
-```
-
-> [!TIP]
-> Recommended logo size: **200×200px** or larger, transparent PNG preferred. bundle-html.py will ultimately compress them all into Base64, so there's no need to worry about file distribution.
 
 ---
 
-### Step 2: Use AI to Build Your Empty Template
+## 🎨 Multiple Slide Styles
 
-This is the most fun part. You **don't need to write any HTML/CSS yourself** — just throw your commonly used slide screenshots at the AI and let it replicate:
+Choose a color skin via the `--skin` parameter. All skins share the same HTML structure and JS logic — only CSS variables are overridden. Skin files are located in `assets/skins/*.css`.
 
-```text
-/hep-frontend-slides
+> 🖥️ **[Preview all skins online →](https://ky230.github.io/Html-slides-public/Hfrontend-slides-PKU-skin/classic/index.html)**
 
-> "I want to create a brand-new academic template. Please reference the complete structure and JS logic of assets/PKU_CMS_Classic_Empty.html.
-> My design requirements are:
-> - Change the primary color to [your color, e.g., dark blue #003366]
-> - Replace the top/bottom bars with [your institution name]
-> - Use assets/YOUR_University.png and assets/YOUR_Lab_logo.png for logos
-> - Keep the 1920x1080 fixed canvas, MathJax support, scroll-snap navigation, and other features I like
->
-> Here are screenshots of a few slides I commonly use — help me match a similar visual style."
-```
-
-**Attach screenshots** (your most satisfying pages from PowerPoint/Keynote), and the AI will replace colors, logos, and fonts based on the complete architecture of the PKU empty template, generating a brand-new:
-
-```
-assets/YOUR_LAB_Classic_Empty.html    ← AI-generated empty template
-```
-
-> [!IMPORTANT]
-> The empty template contains only framework code (Logo, Header, Footer, progress bar, one placeholder `<!-- END slides-scroller -->`), **no actual content pages**. Content will be dynamically injected later by `init-slides.py`.
+| # | | Skin | `--theme-primary` | `--theme-accent` | Style | Preview |
+|---|---|------|-------------------|-----------------|-------|---------|
+| 1 | 🏛️ | `classic` | `#cc0000` | `#ffff00` | PKU Red-Yellow-White (default) | [Preview](https://ky230.github.io/Html-slides-public/Hfrontend-slides-PKU-skin/classic/index.html) |
+| 2 | 🔥 | `bold` | `#ec5f18` | `#f3ecdb` | Orange cards + dark gradient | [Preview](https://ky230.github.io/Html-slides-public/Hfrontend-slides-PKU-skin/bold/index.html) |
+| 3 | 💎 | `cobalt` | `#4361ee` | `#f6f606` | Cobalt blue + bright yellow | [Preview](https://ky230.github.io/Html-slides-public/Hfrontend-slides-PKU-skin/cobalt/index.html) |
+| 4 | ⚡ | `voltage` | `#0066ff` | `#d0f804` | Electric blue + neon yellow | [Preview](https://ky230.github.io/Html-slides-public/Hfrontend-slides-PKU-skin/voltage/index.html) |
+| 5 | 🌿 | `botanical` | `#d4a574` | `#cb2c64` | Warm brown + magenta | [Preview](https://ky230.github.io/Html-slides-public/Hfrontend-slides-PKU-skin/botanical/index.html) |
+| 6 | 🍀 | `jade` | `#2ca657` | `#f6f606` | Jade green + bright yellow | [Preview](https://ky230.github.io/Html-slides-public/Hfrontend-slides-PKU-skin/jade/index.html) |
+| 7 | 💜 | `lavender` | `#9171a6` | `#f7f706` | Lavender purple + lemon yellow | [Preview](https://ky230.github.io/Html-slides-public/Hfrontend-slides-PKU-skin/lavender/index.html) |
+| 8 | 🌐 | `cyber` | `#2dd4bf` | `#f4f81d` | Cyber teal + neon yellow | [Preview](https://ky230.github.io/Html-slides-public/Hfrontend-slides-PKU-skin/cyber/index.html) |
+| 9 | 💻 | `terminal` | `#39d353` | `#39d353` | Hacker terminal green | [Preview](https://ky230.github.io/Html-slides-public/Hfrontend-slides-PKU-skin/terminal/index.html) |
 
 ---
 
-### Step 3: Modify the Scaffold Script (init-slides.py)
+## 🔨 DIY — Customize Your Own Colors
 
-The existing `scripts/init-slides.py` uses `--template CMS` or `--template CEPC` to select the empty template. You need to make it support your new template:
+### 1. Add Your Logo
 
-```text
-> "Please modify scripts/init-slides.py to add a --template YOUR_LAB option.
-> When the user passes --template YOUR_LAB, read assets/YOUR_LAB_Classic_Empty.html as the skeleton.
-> Also change the --speaker default to your own name, and the --affiliations default to your institution."
+Place logo images in `assets/logos/`:
+
+```
+assets/logos/
+├── PKU_logo.jpeg          # Built-in (git tracked)
+├── CMS_logo.png           # Built-in (git tracked)
+├── CEPC_logo.png          # Built-in (git tracked)
+├── CERN_logo.png          # Built-in (git tracked)
+├── YOUR_Lab_logo.png      # ← Add your own (auto gitignored)
 ```
 
-After modification:
+> **Naming convention:** `{Name}_logo.{ext}`, supports `.jpg` `.png` `.svg`. High-resolution transparent background recommended.
+> Runtime JS auto-detects aspect ratio for border-radius (square→circular, non-square→rounded rect).
+
+### 2. Custom Color Skin (diy.css)
+
 ```bash
-python3 scripts/init-slides.py \
-  --template YOUR_LAB \
-  --title "My Research Talk" \
-  --author "Your Name:1" \
-  --event "Lab Meeting" \
-  --outline "Introduction:2" "Methods:3" "Results:2" "Back Up:1" \
-  --out ./my_talk.html
+cd assets/skins
+cp diy.css.example diy.css    # ← diy.css is gitignored, edit freely
 ```
 
-> [!NOTE]
-> The purpose of `init-slides.py` is to **strictly prevent the AI from randomly generating HTML skeletons**. In academic scenarios, no matter how artistically talented the Agent is, it will always make tiny but unacceptable errors in "header height, logo position, progress bar color." This script ensures the skeleton comes 100% from your audited empty template, eliminating all layout surprises.
+Edit the color variables in `diy.css`, then use:
+
+```bash
+python3 scripts/init-slides.py --skin diy --logos YOUR_Lab_logo.png PKU_logo.jpeg ...
+```
+
+> 💡 `diy.css.example` includes detailed comments for every adjustable parameter — each line explains which slide element it controls. No documentation needed.
 
 ---
 
-### Step 4: Write Your Style Specification File
-
-Following the structure of `reference/PKU_ACADEMIC_CLASSIC.md`, create:
-```
-YOUR_LAB_CLASSIC.md
-```
-
-This file is the **sole law** for the AI when filling in content. It needs to contain the following core sections:
-
-| Section | Purpose | Example Content |
-|---------|---------|----------------|
-| **§0 Pre-flight Q&A** | Mandatory checklist of questions the AI must confirm with the user before writing | Brand selection, main title, authors, date, outline list |
-| **§1 Logo Assets** | Which image files, where they are, how to reference them in HTML | `<img src="assets/YOUR_Logo.png" class="logo-img">` |
-| **§2 Brand Differences Table** | If you have multiple variants (e.g., Lab A vs B), list the differences | Different logos, minor color adjustments, etc. |
-| **§3 Complete CSS** | Extracted verbatim from your Empty.html, serving as a reference copy for the AI | `:root { --primary: #003366; ... }` |
-| **§4 MathJax Configuration** | Formula rendering engine settings | Usually can be copied directly from PKU's, no modification needed |
-| **§5 HTML Structure Templates** | HTML skeletons for Title/Outline/Transition/Content page types | The AI strictly follows these tag structures when filling content |
-| **§6 Complete JavaScript** | Interactive JS extracted from Empty.html (scaling, navigation, progress bar) | Usually can be copied directly from the PKU version |
-| **§7 Generation Spec Summary** | A table summarizing all hard constraints (font sizes, fonts, colors, spacing) | Similar to PKU's 27-rule spec table |
-
-> [!TIP]
-> You don't need to hand-write these 800+ lines. Just tell the AI:
-> ```text
-> > "Following the exact structure of reference/PKU_ACADEMIC_CLASSIC.md, generate the corresponding style spec file for my YOUR_LAB_Classic_Empty.html.
-> > Extract the CSS, JS, and HTML structures, replace colors and logo paths, and keep all other constraints."
-> ```
-
----
-
-### Step 5: Register in the Main Skill File
-
-The final step is to let the Agent **see and select your new template** when launching the slides workflow.
-
-Open `hep-frontend-slides.md` and find the mode selection section:
-```markdown
-> Choose a template mode:
-> 1. 🏛️ **PKU Academic Classic** — Group meetings / academic reports (red-yellow classic, dual logos, fixed layout)
-> 2. ⚡️ **Free** — Free style (12 presets, responsive, suitable for pitch/tech talk/creative presentations)
-```
-
-Add your new option:
-```markdown
-> 3. 🔬 **YOUR_LAB Classic** — Your lab's exclusive template (dark blue theme, dual logos, fixed layout)
-```
-
-Then, following the pattern of the PKU Academic rules section in the file, add a new block pointing to your `YOUR_LAB_CLASSIC.md` read instruction:
-```markdown
-### If YOUR_LAB Classic is selected
-**Must read the style specification file first:**
-```
-{{FRONTEND_SLIDES_REPO_PATH}}/YOUR_LAB_CLASSIC.md
-```
-```
-
-At this point, you have a presentation system **completely defined by your own aesthetics and academic requirements, immune to AI's ad-hoc modifications**.
-
----
-
-### 📝 Complete DIY Checklist
-
-```
-1. [ ] Place your logo images in the assets/ directory
-2. [ ] Have AI generate your empty template based on PKU_CMS_Classic_Empty.html
-3. [ ] Modify init-slides.py to support the new --template option
-4. [ ] Have AI generate your style spec based on reference/PKU_ACADEMIC_CLASSIC.md
-5. [ ] Register your new mode in hep-frontend-slides.md
-6. [ ] Battle-test it with a real group meeting presentation!
-```
-
----
-
-</details>
-
----
 *Created by [@zarazhangrui](https://github.com/zarazhangrui). Extended by Leyan Li with Academic Rigor.*  
 *Inspired by the "Vibe Coding" philosophy — building beautiful things without being a traditional software engineer.*

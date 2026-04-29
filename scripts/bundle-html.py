@@ -19,14 +19,14 @@ def bundle_html(input_html_path, output_html_path):
     with open(input_html_path, "r", encoding="utf-8") as f:
         html_content = f.read()
 
-    # 正则表达式寻找 <img ... src="路径">
+    # Regex to find <img ... src="path">
     pattern = r'<img\s+[^>]*src=["\']([^"\']+)["\']'
     matches = re.finditer(pattern, html_content)
     
     bundled_count = 0
     for match in matches:
         img_src = match.group(1)
-        # 跳过已经是 base64 或外部网络链接的图片
+        # Skip images already base64-encoded or external URLs
         if img_src.startswith("data:") or img_src.startswith("http"):
             continue 
             
@@ -38,23 +38,23 @@ def bundle_html(input_html_path, output_html_path):
         if os.path.exists(full_img_path):
             try:
                 b64_data = get_base64_encoded_image(full_img_path)
-                # 字符串精准替换 src
+                # Exact string replacement of src
                 html_content = html_content.replace(f'src="{img_src}"', f'src="{b64_data}"')
                 html_content = html_content.replace(f"src='{img_src}'", f"src='{b64_data}'")
-                print(f"🖼️ 成功嵌入图片: {img_src}")
+                print(f"🖼️ Embedded image: {img_src}")
                 bundled_count += 1
             except Exception as e:
-                print(f"❌ 嵌入失败 {img_src}: {e}")
+                print(f"❌ Failed to embed {img_src}: {e}")
         else:
-            print(f"⚠️ 找不到图片文件，已跳过: {full_img_path}")
+            print(f"⚠️ Image not found, skipped: {full_img_path}")
             
     with open(output_html_path, "w", encoding="utf-8") as f:
         f.write(html_content)
     
     print("\n" + "="*50)
-    print(f"✨ 单文件打包完成！")
-    print(f"总计嵌入图片: {bundled_count} 张")
-    print(f"生成路径: {output_html_path}")
+    print(f"✨ Bundle complete!")
+    print(f"Total images embedded: {bundled_count}")
+    print(f"Output: {output_html_path}")
     print("="*50)
 
 if __name__ == "__main__":

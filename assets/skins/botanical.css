@@ -1,0 +1,55 @@
+/* PKU Skin: Botanical — 暗夜 + 暖色渐变 */
+/* Google Fonts: Cormorant:wght@400;600;700&family=IBM+Plex+Sans:wght@300;400;500 */
+
+:root {
+    --theme-primary: #d4a574;
+    --theme-accent: #cb2c64;
+    --theme-progress: #cb2c64;
+    --theme-bg: #0f0f0f;
+    --theme-text: #e8e4df;
+    --font-body: 'IBM Plex Sans', sans-serif;
+}
+
+html,
+body {
+    background: #080808;
+}
+
+.slide {
+    background-color: #0f0f0f;
+    background-image:
+        radial-gradient(ellipse at 85% 15%, rgba(212, 165, 116, 0.16) 0%, transparent 45%),
+        radial-gradient(ellipse at 15% 85%, rgba(203, 44, 100, 0.067) 0%, transparent 45%),
+        repeating-linear-gradient(0deg,
+            transparent,
+            transparent 2px,
+            rgba(212, 165, 116, 0.03) 2px,
+            rgba(212, 165, 116, 0.03) 4px);
+    background-size: cover;
+}
+
+.title-banner h1 {
+    font-family: 'Cormorant', serif;
+}
+
+.transition-text {
+    font-family: 'Cormorant', serif;
+}
+
+table th {
+    background: #d4a574;
+    color: #0f0f0f;
+}
+
+table tr:nth-child(even) td {
+    background: #1a1a1a;
+}
+
+table td {
+    border-color: #333;
+    color: #ddd;
+}
+
+a {
+    color: #cb2c64;
+}

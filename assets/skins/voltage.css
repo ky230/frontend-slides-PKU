@@ -1,0 +1,60 @@
+/* PKU Skin: Voltage — 电离蓝 + 霓虹黄 */
+/* Google Fonts: System Font */
+
+:root {
+    --theme-primary: #0066ff;
+    --theme-accent: #d0f804;
+    --theme-progress: #d0f804;
+    --theme-bg: #1a1a2e;
+    --theme-text: #ffffff;
+    --font-body: 'Times New Roman', Times, serif;
+}
+
+html,
+body {
+    background: #0f0f23;
+}
+
+.slide {
+    background-color: #1a1a2e;
+    background-image:
+        linear-gradient(rgba(0, 102, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 102, 255, 0.05) 1px, transparent 1px),
+        radial-gradient(ellipse at 85% 15%, rgba(0, 102, 255, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 15% 85%, rgba(208, 248, 4, 0.1) 0%, transparent 50%);
+    background-size: 50px 50px, 50px 50px, cover, cover;
+}
+
+table th {
+    background: #0066ff;
+}
+
+table tr:nth-child(even) td {
+    background: #22224a;
+}
+
+table td {
+    border-color: #333366;
+    color: #ddd;
+}
+
+a {
+    color: #d4ff00;
+}
+
+/* Box background overrides for better contrast on dark themes (+15% opacity) */
+.highlight-box {
+    background: color-mix(in srgb, var(--theme-highlight) 23%, transparent);
+}
+
+.important-box {
+    background: rgba(59, 130, 246, 0.21);
+}
+
+.warning-box {
+    background: rgba(245, 158, 11, 0.21);
+}
+
+.tip-box {
+    background: rgba(34, 197, 94, 0.21);
+}

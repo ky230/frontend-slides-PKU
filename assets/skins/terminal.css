@@ -1,0 +1,80 @@
+/* PKU Skin: Terminal — 黑客终端 + 扫描线 */
+/* Google Fonts: JetBrains+Mono:wght@400;500;700 */
+
+:root {
+    --theme-primary: #39d353;
+    --theme-accent: #39d353;
+    --theme-progress: #39d353;
+    --theme-bg: #0d1117;
+    --theme-text: #c9d1d9;
+    --font-body: 'JetBrains Mono', monospace;
+}
+
+html,
+body {
+    background: #010409;
+}
+
+.slide {
+    background-color: #0d1117;
+    background-image:
+        radial-gradient(ellipse at 85% 15%, rgba(57, 211, 83, 0.08) 0%, transparent 45%),
+        radial-gradient(ellipse at 15% 85%, rgba(88, 166, 255, 0.11) 0%, transparent 45%),
+        repeating-linear-gradient(0deg,
+            transparent,
+            transparent 2px,
+            rgba(57, 211, 83, 0.03) 2px,
+            rgba(57, 211, 83, 0.03) 4px);
+    background-size: cover;
+}
+
+.title-banner {
+    background: #161b22;
+    border: 1px solid #30363d;
+}
+
+.global-header {
+    background: #161b22;
+    border-bottom: 1px solid #30363d;
+}
+
+.global-footer {
+    background: #161b22;
+    border-top: 1px solid #30363d;
+}
+
+.header-text {
+    color: #39d353;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.transition-text {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.bullet-list li::marker {
+    color: #39d353;
+}
+
+.bullet-list li ul li::marker {
+    color: #39d353;
+}
+
+table th {
+    background: #21262d;
+    color: #39d353;
+    border: 1px solid #30363d;
+}
+
+table td {
+    border-color: #30363d;
+    color: #c9d1d9;
+}
+
+table tr:nth-child(even) td {
+    background: #161b22;
+}
+
+a {
+    color: #58a6ff;
+}

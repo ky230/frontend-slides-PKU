@@ -1,0 +1,66 @@
+/* PKU Skin: Cyber — 赛博霓虹 + 粒子背景 */
+/* Google Fonts: none */
+/* Fontshare: https://api.fontshare.com/v2/css?f[]=clash-display@700&f[]=satoshi@400;500;700&display=swap */
+
+:root {
+    --theme-primary: #2dd4bf;
+    --theme-accent: #f4f81d;
+    --theme-progress: #f4f81d;
+    --theme-bg: #0a0f1c;
+    --theme-text: #e0e0e0;
+    --font-body: 'Satoshi', sans-serif;
+}
+
+html,
+body {
+    background: #060a14;
+}
+
+.slide {
+    background-color: #0a0f1c;
+    background-image:
+        radial-gradient(ellipse at 85% 10%, rgba(0, 255, 204, 0.15) 0%, transparent 45%),
+        radial-gradient(ellipse at 10% 90%, rgba(244, 248, 29, 0.11) 0%, transparent 45%),
+        linear-gradient(rgba(0, 255, 204, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 204, 0.03) 1px, transparent 1px);
+    background-size: cover, cover, 50px 50px, 50px 50px;
+}
+
+.global-header {
+    box-shadow: 0 0 20px rgba(0, 255, 204, 0.3);
+}
+
+.global-footer {
+    box-shadow: 0 0 20px rgba(0, 255, 204, 0.3);
+}
+
+.title-banner h1 {
+    font-family: 'Clash Display', sans-serif;
+    text-shadow: 0 0 30px rgba(0, 255, 204, 0.5);
+}
+
+.bullet-list li::marker {
+    color: #00ffcc;
+}
+
+.bullet-list li ul li::marker {
+    color: #00ffcc;
+}
+
+table th {
+    background: #00ffcc;
+    color: #0a0f1c;
+}
+
+table tr:nth-child(even) td {
+    background: #111827;
+}
+
+table td {
+    border-color: #1e293b;
+    color: #d0d0d0;
+}
+
+a {
+    color: #2dd4bf;
+}

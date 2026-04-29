@@ -4,5 +4,7 @@ __pycache__/
 node_modules/
 .vercel/
 extracted-slides.json
+scripts/gen_skin_showcase.py
+assets/skins/diy.css
 *.html
-!assets/*_Empty.html
+!assets/templates/*.html

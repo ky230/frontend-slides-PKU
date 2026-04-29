@@ -1,0 +1,148 @@
+/* ═══════════════════════════════════════════════════════
+ * PKU Skin: DIY Template
+ * ═══════════════════════════════════════════════════════
+ *
+ * HOW TO USE:
+ * 1. cp diy.css.example diy.css
+ * 2. Edit the colors and values below
+ * 3. Use with: python3 scripts/init-slides.py --skin diy ...
+ *
+ * Google Fonts: (uncomment the font name in the line below if needed)
+ * Archivo+Black&family=Space+Grotesk:wght@400;500;700
+ *
+ * Every line is annotated with which slide element it controls.
+ * ═══════════════════════════════════════════════════════ */
+
+/* ── 1. Theme Variables ────────────────────────────────
+ * These CSS custom properties control the ENTIRE slide color scheme.
+ * Change these 6 values and the whole presentation adapts.
+ * ──────────────────────────────────────────────────── */
+:root {
+    --theme-primary: #cc0000;    /* Header bar background, bullet markers, highlight-box border, footer background */
+    --theme-accent: #ffff00;     /* Title page keyword highlight <span class="highlight-accent">, header title text color */
+    --theme-progress: #d4a800;   /* Progress bar segment color (amber-gold) */
+    --theme-bg: #fefefc;         /* Slide background color */
+    --theme-text: #1a1a1a;       /* All body text, bullet text, table text */
+    --font-body: 'Times New Roman', Times, serif;  /* Global font family for all text */
+}
+
+/* ── 2. Page Background ────────────────────────────────
+ * html/body: The outermost background (visible during slide transitions)
+ * .slide: Each individual slide's background (can include gradients/patterns)
+ * ──────────────────────────────────────────────────── */
+html,
+body {
+    background: #fefefc;    /* Outer page background — match --theme-bg or go darker */
+}
+
+.slide {
+    background-color: var(--theme-bg);
+    /* Optional: add gradient overlays for depth. Examples:
+     * radial-gradient(ellipse at 85% 15%, rgba(R,G,B,0.15) 0%, transparent 45%)  ← top-right glow
+     * linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px)               ← grid pattern
+     */
+}
+
+/* ── 3. Title Banner ───────────────────────────────────
+ * .title-banner h1: The main title text on the title slide
+ * ──────────────────────────────────────────────────── */
+.title-banner h1 {
+    font-family: var(--font-body);   /* Override if you want a display font for titles */
+}
+
+/* ── 4. Tables ─────────────────────────────────────────
+ * table: Data tables on content slides
+ * tr:nth-child(even) td: Alternating row stripe color
+ * td: Cell border and text color
+ * ──────────────────────────────────────────────────── */
+table tr:nth-child(even) td {
+    background: rgba(0,0,0,0.03);   /* Even row stripe — use subtle tint */
+}
+
+table td {
+    border-color: #e5e5e5;           /* Cell border — lighter for light themes */
+    color: var(--theme-text);        /* Cell text color */
+}
+
+/* ── 5. Highlight Boxes ────────────────────────────────
+ * Four colored callout boxes for conclusions, notes, warnings, tips.
+ * Border color is auto-set by the framework; only background needs override.
+ * ──────────────────────────────────────────────────── */
+.highlight-box {
+    background: color-mix(in srgb, var(--theme-highlight) 12%, transparent) !important;
+    /* Red conclusion box — auto-uses --theme-primary tint */
+}
+
+.important-box {
+    background: rgba(59, 130, 246, 0.12) !important;   /* Blue note box */
+}
+
+.warning-box {
+    background: rgba(245, 158, 11, 0.12) !important;   /* Orange warning box */
+}
+
+.tip-box {
+    background: rgba(34, 197, 94, 0.12) !important;    /* Green tip box */
+}
+
+/* ── 6. Hyperlinks ─────────────────────────────────────
+ * a: All clickable links in bullet text
+ * ──────────────────────────────────────────────────── */
+a {
+    color: #2563eb;   /* Link blue — use brighter shade for dark themes (e.g. #58a6ff) */
+}
+
+/* ═══════════════════════════════════════════════════════
+ * 7. TERMINAL / CODE BLOCK OVERRIDES
+ *
+ * These control the macOS-style terminal boxes.
+ * For dark-bg skins: use dark terminal colors (Catppuccin/One Dark)
+ * For light-bg skins: use light terminal colors (Atom One Light)
+ * ═══════════════════════════════════════════════════════ */
+
+/* ── 7a. Terminal Container ────────────────────────────
+ * .mac-terminal:       Outer border + shadow
+ * .mac-terminal-bar:   The top title bar with traffic light dots
+ * .mac-terminal-title: The text in the title bar (e.g. "📁 ky230 — -zsh")
+ * .mac-terminal-body:  The code area background
+ * .mac-terminal-code:  The actual code text color
+ * .mac-terminal-lined: Line-numbered code variant
+ * ──────────────────────────────────────────────────── */
+.mac-terminal { border-color: rgba(0,0,0,0.1); box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
+.mac-terminal-bar { background: linear-gradient(180deg, #e8e8ea, #d4d4d8); border-bottom-color: rgba(0,0,0,0.15); }
+.mac-terminal-title { color: #6b6b6b; }
+.mac-terminal-body { background: #fafafa; }
+.mac-terminal-code { color: #383a42; }
+.mac-terminal-lined .code-line::before { color: #a0a1a7; }  /* Line numbers */
+
+/* ── 7b. Syntax Highlighting ──────────────────────────
+ * Used in both static code displays and typewriter animations.
+ * .term-keyword:   Language keywords (if, for, import, def, class, etc.)
+ * .term-func:      Function/method names
+ * .term-string:    String literals ("hello", 'world')
+ * .term-comment:   Code comments (// or #)
+ * .term-num:       Numeric literals (42, 3.14)
+ * .term-highlight: Emphasized code (key result values)
+ * .term-prompt:    Shell prompt symbol ($)
+ * .term-cmd:       Shell command names (python3, git)
+ * .term-dim:       Dimmed/decorative text (separator lines)
+ * .term-green:     Success messages (✅)
+ * .term-type:      Type names (int, float, HashMap)
+ * .term-tag:       HTML tag names (<div>, <section>)
+ * .term-attr:      HTML attribute names (class=, style=)
+ * .term-cursor:    Blinking cursor block (█)
+ * ──────────────────────────────────────────────────── */
+.term-keyword  { color: #a626a4; }   /* Purple — keywords */
+.term-func     { color: #4078f2; }   /* Blue — functions */
+.term-string   { color: #50a14f; }   /* Green — strings */
+.term-comment  { color: #a0a1a7; }   /* Grey — comments */
+.term-num      { color: #986801; }   /* Brown — numbers */
+.term-highlight { color: #e45649; background: rgba(228,86,73,0.1); }  /* Red bg — emphasis */
+.term-prompt   { color: #50a14f; }   /* Green — $ prompt */
+.term-cmd      { color: #4078f2; }   /* Blue — commands */
+.term-dim      { color: #a0a1a7; }   /* Grey — decorative */
+.term-green    { color: #50a14f; }   /* Green — success */
+.term-type     { color: #0184bc; }   /* Cyan — type names */
+.term-tag      { color: #e45649; }   /* Red — HTML tags */
+.term-attr     { color: #986801; }   /* Brown — attributes */
+.term-cursor   { color: #383a42; }   /* Dark — cursor */
