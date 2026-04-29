@@ -32,7 +32,7 @@
 
 ---
 
-## ⚡ 三步出图 (Quick Start)
+## ⚡ 3 steps (Quick Start)
 
 | Step | 操作 | 说明 |
 |------|------|------|
