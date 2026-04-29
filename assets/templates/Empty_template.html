@@ -1273,7 +1273,7 @@
         document.querySelectorAll('.logo-img').forEach(function(img) {
             function applyRadius() {
                 // Explicit rule for CMS logo which is square but needs 4px
-                if (img.src.includes('CMS')) {
+                if (img.src.includes('CMS') || (img.alt && img.alt.includes('CMS'))) {
                     img.style.borderRadius = '4px';
                     return;
                 }

@@ -24,6 +24,9 @@
 ---
 
 > [!NOTE]
+> 🎯 **Motivation & Live Demo** — 想了解这个框架能做什么？看这份 18 页的技术教程 slides：
+> **[Frontend Slides PKU — Technical Tutorial](https://ky230.github.io/Html-slides-public/frontend_slides_intro/index.html)**
+> 
 > **致谢** — 本项目分叉自 [@zarazhangrui/frontend-slides](https://github.com/zarazhangrui/frontend-slides/tree/main)。
 > 
 > **新增内容** — 引入 **PKU Academic Classic** 学术模板：动态多 Logo 注入、10 款配色皮肤 + DIY 自定义、严格排版约束与脚手架自动化。

@@ -24,6 +24,9 @@
 ---
 
 > [!NOTE]
+> 🎯 **Motivation & Live Demo** — Want to see what this framework can do? Check out this 18-page technical tutorial:
+> **[Frontend Slides PKU — Technical Tutorial](https://ky230.github.io/Html-slides-public/frontend_slides_intro/index.html)**
+> 
 > **Credits** — This project is forked from [@zarazhangrui/frontend-slides](https://github.com/zarazhangrui/frontend-slides/tree/main).
 > 
 > **Additions** — Introduces **PKU Academic Classic** academic template: dynamic multi-logo injection, 10 color skins + DIY customization, strict typographic constraints and scaffold automation.
